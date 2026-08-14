@@ -88,7 +88,6 @@
    "contains" "!contains"
    "or" "!or"
    "and" "!and"
-   "name" "description" "version"
    "parent" "root" "objects" "consumes" "produces" "exec" "shell"
    "init" "setup" "build" "post-build" "post_build"
    "$" "!$" "..$"
