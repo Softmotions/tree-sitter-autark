@@ -145,7 +145,6 @@
 ((rule
    name: (rule_name) @property)
  (#any-of? @property
-   "name" "description" "version"
    "parent" "root"
    "objects" "consumes" "produces" "exec" "shell"))
 
