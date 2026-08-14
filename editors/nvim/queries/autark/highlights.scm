@@ -32,29 +32,24 @@
    "env")
  (#not-eq? @string.special "always"))
 
-; The first bare value in set/let/env is the variable name, not a regular
-; value. The anchor after rule_name makes this the first named body child.
+; Remaining bare values in set/let/env are ordinary values. Match the
+; complete body tail in one pattern instead of relying on repeated adjacent
+; sibling matches; this is robust in Neovim's highlighter for long value lists.
 ((rule
    name: (rule_name) @_parent
    .
-   body: (literal) @keyword.modifier)
+   body: (literal) @keyword.modifier
+   .
+   body: [
+     (literal) @string.special
+     (single_quoted_string)
+     (double_quoted_string)
+     (rule)
+   ]*)
  (#any-of? @_parent
    "set" "!set" "..set"
    "let" "!let" "..let"
    "env"))
-
-; Remaining bare values in set/let/env are ordinary values. Matching an
-; immediately preceding body node ensures the captured literal is not first.
-((rule
-   name: (rule_name) @_parent
-   body: (_)
-   .
-   body: (literal) @string.special)
- (#any-of? @_parent
-   "set" "!set" "..set"
-   "let" "!let" "..let"
-   "env")
- (#not-eq? @string.special "always"))
 
 ; A literal named `always` outside run/run-on-install is an ordinary value.
 ((rule
