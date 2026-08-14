@@ -68,9 +68,9 @@
    "name" "description" "version"
    "parent" "root" "objects" "consumes" "produces" "exec" "shell"
    "init" "setup" "build" "post-build" "post_build"
-   "$" "!$" "..$" "..!$"
-   "@" "!@"
-   "@@" "!@@"
+   "$" "!$" "..$",
+   "@" "!@", "..@@",
+   "@@" "!@@", "..@@",
    "^" "!^"
    "%" "!%"
    "S" "!S"
@@ -86,8 +86,8 @@
    name: (rule_name) @keyword)
  (#any-of? @keyword
    "meta" "option" "check"
-   "set" "!set" "..set" "..!set"
-   "let" "!let" "..let" "..!let"
+   "set" "!set" "..set"
+   "let" "!let" "..let"
    "env"
    "if" "!if" "else"
    "error" "echo" "configure"
@@ -128,9 +128,9 @@
 ((rule
    name: (rule_name) @function.builtin)
  (#any-of? @function.builtin
-   "$" "!$" "..$" "..!$"
-   "@" "!@"
-   "@@" "!@@"
+   "$" "!$" "..$"
+   "@" "!@", "..@"
+   "@@" "!@@", "..@@"
    "^" "!^"
    "%" "!%"
    "S" "!S"
