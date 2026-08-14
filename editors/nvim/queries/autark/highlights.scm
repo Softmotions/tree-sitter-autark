@@ -25,7 +25,35 @@
 ((rule
    name: (rule_name) @_parent
    body: (literal) @string.special)
- (#not-eq? @_parent "check")
+ (#not-any-of? @_parent
+   "check"
+   "set" "!set" "..set"
+   "let" "!let" "..let"
+   "env")
+ (#not-eq? @string.special "always"))
+
+; The first bare value in set/let/env is the variable name, not a regular
+; value. The anchor after rule_name makes this the first named body child.
+((rule
+   name: (rule_name) @_parent
+   .
+   body: (literal) @keyword.modifier)
+ (#any-of? @_parent
+   "set" "!set" "..set"
+   "let" "!let" "..let"
+   "env"))
+
+; Remaining bare values in set/let/env are ordinary values. Matching an
+; immediately preceding body node ensures the captured literal is not first.
+((rule
+   name: (rule_name) @_parent
+   body: (_)
+   .
+   body: (literal) @string.special)
+ (#any-of? @_parent
+   "set" "!set" "..set"
+   "let" "!let" "..let"
+   "env")
  (#not-eq? @string.special "always"))
 
 ; A literal named `always` outside run/run-on-install is an ordinary value.
@@ -138,3 +166,4 @@
    "C" "!C"
    "CC" "!CC"
    "&"))
+  "&"))
