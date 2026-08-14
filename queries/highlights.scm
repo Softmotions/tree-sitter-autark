@@ -29,8 +29,7 @@
    "check"
    "set" "!set" "..set"
    "let" "!let" "..let"
-   "env")
- (#not-eq? @string.special "always"))
+   "env"))
 
 ; Remaining bare values in set/let/env are ordinary values. Match the
 ; complete body tail in one pattern instead of relying on repeated adjacent
@@ -51,20 +50,6 @@
    "let" "!let" "..let"
    "env"))
 
-; A literal named `always` outside run/run-on-install is an ordinary value.
-((rule
-   name: (rule_name) @_parent
-   body: (literal) @string.special)
- (#eq? @string.special "always")
- (#not-any-of? @_parent "run" "run-on-install"))
-
-; `always` is a bare value in a run block, not a rule name in the AST.
-((rule
-   name: (rule_name) @_parent
-   body: (literal) @keyword.modifier)
- (#any-of? @_parent "run" "run-on-install")
- (#eq? @keyword.modifier "always"))
-
 ; Generic/custom rules. Only actually supported built-in spellings are
 ; excluded. Unsupported modifier combinations therefore remain generic rather
 ; than being highlighted as valid Autark built-ins.
@@ -72,10 +57,10 @@
    name: (rule_name) @function.call)
  (#not-any-of? @function.call
    "meta" "option" "check"
-   "set" "!set" "..set" "..!set"
-   "let" "!let" "..let" "..!let"
+   "set" "!set" "..set"
+   "let" "!let" "..let"
+   "if" "!if" "..if" "else"
    "env"
-   "if" "!if" "else"
    "error" "echo" "configure"
    "run" "run-on-install"
    "in-sources" "foreach"
@@ -88,6 +73,7 @@
    "contains" "!contains"
    "or" "!or"
    "and" "!and"
+   "always"
    "parent" "root" "objects" "consumes" "produces" "exec" "shell"
    "init" "setup" "build" "post-build" "post_build"
    "$" "!$" "..$"
@@ -145,12 +131,11 @@
 ((rule
    name: (rule_name) @property)
  (#any-of? @property
-   "parent" "root"
-   "objects" "consumes" "produces" "exec" "shell"))
+   "parent" "root" "objects" "consumes" "produces" "exec" "shell" "always"))
 
 ; Build phases are language-defined block names.
 ((rule
    name: (rule_name) @keyword)
  (#any-of? @keyword
-   "init" "setup" "build" "post-build" "post_build"))
+   "init" "setup" "build" "post-build"))
 

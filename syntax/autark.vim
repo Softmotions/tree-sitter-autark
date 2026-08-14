@@ -27,10 +27,10 @@ syn match autarkKeywordRule /\%(^\|[{}[:space:]]\)\zs\%(\.\.\)\?\%(!\)\?\%(set\|
 syn match autarkControlRule /\%(^\|[{}[:space:]]\)\zs\%(!\)\?\%(defined\|eq\|prefix\|contains\|or\|and\)\ze\_s*{/
 
 " Named fields/subsections of built-in blocks.
-syn match autarkPropertyRule /\%(^\|[{}[:space:]]\)\zs\%(name\|description\|version\|parent\|root\|objects\|consumes\|produces\|exec\|shell\)\ze\_s*{/
+syn match autarkPropertyRule /\%(^\|[{}[:space:]]\)\zs\%(name\|description\|version\|parent\|root\|objects\|consumes\|produces\|exec\|shell|always\)\ze\_s*{/
 
 " Build phases are language-defined block names.
-syn match autarkPhaseRule /\%(^\|[{}[:space:]]\)\zs\%(init\|setup\|build\|post-build\|post_build\)\ze\_s*{/
+syn match autarkPhaseRule /\%(^\|[{}[:space:]]\)\zs\%(init\|setup\|build\|post-build\)\ze\_s*{/
 
 " `always` is a bare run modifier rather than a rule name.
 syn match autarkRunModifier /\<always\>/
@@ -62,7 +62,6 @@ hi def link autarkRuleName Function
 hi def link autarkKeywordRule Keyword
 hi def link autarkControlRule Operator
 hi def link autarkPropertyRule Identifier
-hi def link autarkPhaseRule Keyword
 hi def link autarkRunModifier Keyword
 hi def link autarkSpecialRule Special
 hi def link autarkDelimiter Delimiter
