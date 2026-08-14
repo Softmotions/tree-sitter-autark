@@ -1,20 +1,20 @@
 ; Tree-sitter highlights for Autark.
-; Capture names are chosen so they work in Neovim and with tree-sitter-vscode.
+; Capture names are compatible with Neovim and tree-sitter-vscode.
 ;
-; Do not use #match? for built-in rule-name lists here. Neovim implements
-; #match? with a very-magic Vim regex, where characters used by Autark rule
-; names (notably '@') have regexp meaning. #any-of? is both exact and faster
-; for keyword lists, and avoids editor-specific regexp escaping.
+; Built-in names are matched with #any-of? rather than #match? so Neovim does
+; not have to reinterpret Autark punctuation through Vim's regexp engine.
 
 (comment) @comment
 
 (single_quoted_string) @string
 (double_quoted_string) @string
-(literal) @string.special
+((literal) @string.special
+ (#not-eq? @string.special "always"))
 
 ["{" "}"] @punctuation.bracket
 
-; Generic/custom rules. Built-ins are excluded to avoid overlapping captures.
+; Generic/custom rules. Known language constructs are excluded so every rule
+; name receives one semantic role instead of overlapping captures.
 ((rule
    name: (rule_name) @function.call)
  (#not-any-of? @function.call
@@ -48,19 +48,10 @@
    "contains" "!contains" "..contains" "..!contains"
    "or" "!or" "..or" "..!or"
    "and" "!and" "..and" "..!and"
-   "parent" "!parent" "..parent" "..!parent"
-   "root" "!root" "..root" "..!root"
-   "objects" "!objects" "..objects" "..!objects"
-   "consumes" "!consumes" "..consumes" "..!consumes"
-   "produces" "!produces" "..produces" "..!produces"
-   "exec" "!exec" "..exec" "..!exec"
-   "shell" "!shell" "..shell" "..!shell"
-   "always" "!always" "..always" "..!always"
-   "init" "!init" "..init" "..!init"
-   "setup" "!setup" "..setup" "..!setup"
-   "build" "!build" "..build" "..!build"
-   "post-build" "!post-build" "..post-build" "..!post-build"
-   "post_build" "!post_build" "..post_build" "..!post_build"
+   "name" "description" "version"
+   "parent" "root" "objects" "consumes" "produces" "exec" "shell"
+   "init" "setup" "build" "post-build" "post_build"
+   "always"
    "$" "!$" "..$" "..!$"
    "@" "!@" "..@" "..!@"
    "@@" "!@@" "..@@" "..!@@"
@@ -101,29 +92,50 @@
    "include" "!include" "..include" "..!include"
    "fetch-url" "!fetch-url" "..fetch-url" "..!fetch-url"))
 
-; Conditions and structurally significant child blocks.
+; Built-in condition/predicate rules behave like operators/functions rather
+; than named fields of a record-like block.
 ((rule
-   name: (rule_name) @keyword)
- (#any-of? @keyword
+   name: (rule_name) @keyword.operator)
+ (#any-of? @keyword.operator
    "defined" "!defined" "..defined" "..!defined"
    "eq" "!eq" "..eq" "..!eq"
    "prefix" "!prefix" "..prefix" "..!prefix"
    "contains" "!contains" "..contains" "..!contains"
    "or" "!or" "..or" "..!or"
-   "and" "!and" "..and" "..!and"
-   "parent" "!parent" "..parent" "..!parent"
-   "root" "!root" "..root" "..!root"
-   "objects" "!objects" "..objects" "..!objects"
-   "consumes" "!consumes" "..consumes" "..!consumes"
-   "produces" "!produces" "..produces" "..!produces"
-   "exec" "!exec" "..exec" "..!exec"
-   "shell" "!shell" "..shell" "..!shell"
-   "always" "!always" "..always" "..!always"
-   "init" "!init" "..init" "..!init"
-   "setup" "!setup" "..setup" "..!setup"
-   "build" "!build" "..build" "..!build"
-   "post-build" "!post-build" "..post-build" "..!post-build"
-   "post_build" "!post_build" "..post_build" "..!post_build"))
+   "and" "!and" "..and" "..!and"))
+
+; Named fields/subsections of built-in blocks.
+; Include-tree selectors and phase blocks are language-defined names rather
+; than user-defined calls.
+((rule
+   name: (rule_name) @property)
+ (#any-of? @property
+   "name" "description" "version"
+   "parent" "root"
+   "objects" "consumes" "produces" "exec" "shell"))
+
+((rule
+   name: (rule_name) @keyword)
+ (#any-of? @keyword
+   "init" "setup" "build" "post-build" "post_build"))
+
+; A literal named `always` outside run/run-on-install is an ordinary value.
+((rule
+   name: (rule_name) @_parent
+   body: (literal) @string.special)
+ (#eq? @string.special "always")
+ (#not-any-of? @_parent
+   "run" "!run" "..run" "..!run"
+   "run-on-install" "!run-on-install" "..run-on-install" "..!run-on-install"))
+
+; `always` is a bare value in a run block, not a rule name in the AST.
+((rule
+   name: (rule_name) @_parent
+   body: (literal) @keyword.modifier)
+ (#any-of? @_parent
+   "run" "!run" "..run" "..!run"
+   "run-on-install" "!run-on-install" "..run-on-install" "..!run-on-install")
+ (#eq? @keyword.modifier "always"))
 
 ; Substitution/evaluation/path helper rules.
 ((rule

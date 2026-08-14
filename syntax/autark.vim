@@ -21,8 +21,17 @@ syn match autarkRuleName /\%([^{}\\[:space:]]\|\\[{}\\nrt]\)\+\ze\_s*{/
 " rule name and have the same highlighting as the directive itself.
 syn match autarkKeywordRule /\%(^\|[{}[:space:]]\)\zs\%((\.\.)\)\?\(!\)\?\%(meta\|option\|check\|set\|let\|env\|if\|else\|error\|echo\|configure\|run\|run-on-install\|in-sources\|foreach\|cc\|cxx\|library\|include\|install\|install-sources\|macro\|call\|fetch-url\)\ze\_s*{/
 
-" Structural/helper child rules used by built-in directives.
-syn match autarkControlRule /\%(^\|[{}[:space:]]\)\zs\%((\.\.)\)\?\(!\)\?\%(defined\|eq\|prefix\|contains\|or\|and\|parent\|root\|objects\|consumes\|produces\|exec\|shell\|always\|init\|setup\|build\|post-build\|post_build\)\ze\_s*{/
+" Built-in predicates/operators.
+syn match autarkControlRule /\%(^\|[{}[:space:]]\)\zs\%((\.\.)\)\?\(!\)\?\%(defined\|eq\|prefix\|contains\|or\|and\)\ze\_s*{/
+
+" Named fields/subsections of built-in blocks.
+syn match autarkPropertyRule /\%(^\|[{}[:space:]]\)\zs\%(name\|description\|version\|parent\|root\|objects\|consumes\|produces\|exec\|shell\)\ze\_s*{/
+
+" Build phases are language-defined block names.
+syn match autarkPhaseRule /\%(^\|[{}[:space:]]\)\zs\%(init\|setup\|build\|post-build\|post_build\)\ze\_s*{/
+
+" `always` is a bare run modifier rather than a rule name.
+syn match autarkRunModifier /\<always\>/
 
 " Symbolic substitutions/helpers and source/path helpers.
 syn match autarkSpecialRule /\%(^\|[{}[:space:]]\)\zs\%((\.\.)\)\?\(!\)\?\%(\$\|@\|@@\|\^\|%\|S\|SS\|C\|CC\|&\)\ze\_s*{/
@@ -46,7 +55,10 @@ hi def link autarkDoubleQuotedString String
 hi def link autarkLiteral String
 hi def link autarkRuleName Function
 hi def link autarkKeywordRule Keyword
-hi def link autarkControlRule Keyword
+hi def link autarkControlRule Operator
+hi def link autarkPropertyRule Identifier
+hi def link autarkPhaseRule Keyword
+hi def link autarkRunModifier Keyword
 hi def link autarkSpecialRule Special
 hi def link autarkDelimiter Delimiter
 
