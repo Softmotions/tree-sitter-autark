@@ -1,0 +1,35 @@
+{
+  "name": "tree-sitter-autark",
+  "version": "0.1.5",
+  "description": "Tree-sitter grammar for the Autark build-script DSL",
+  "license": "MIT",
+  "repository": "https://github.com/Softmotions/tree-sitter-autark",
+  "keywords": [
+    "tree-sitter",
+    "autark",
+    "build-system",
+    "dsl"
+  ],
+  "files": [
+    "grammar.js",
+    "tree-sitter.json",
+    "queries/**",
+    "src/**",
+    "*.wasm",
+    "ftdetect/**",
+    "ftplugin/**",
+    "syntax/**",
+    "editors/vim/**",
+    "plugin/**",
+    "editors/nvim/**",
+    "editors/vscode/**"
+  ],
+  "scripts": {
+    "generate": "tree-sitter generate",
+    "generate:abi15": "tree-sitter generate --abi 15",
+    "test": "tree-sitter test",
+    "build": "tree-sitter build",
+    "build:wasm": "tree-sitter generate --abi 15 && tree-sitter build --wasm",
+    "highlight": "tree-sitter highlight examples/Autark"
+  }
+}

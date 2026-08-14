@@ -1,0 +1,15 @@
+{
+  "tree-sitter-vscode.languageConfigs": [
+    {
+      "lang": "autark",
+      "parser": "/ABSOLUTE/PATH/TO/softmotions.autark-language-0.2.0/tree-sitter-autark.wasm",
+      "highlights": "/ABSOLUTE/PATH/TO/softmotions.autark-language-0.2.0/queries/highlights.scm",
+      "folds": "/ABSOLUTE/PATH/TO/softmotions.autark-language-0.2.0/queries/folds.scm",
+      "semanticTokenTypeMappings": {
+        "punctuation.bracket": {
+          "targetTokenType": "operator"
+        }
+      }
+    }
+  ]
+}

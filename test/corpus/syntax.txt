@@ -1,0 +1,84 @@
+==================
+Rules may touch their opening brace
+==================
+
+S{foo}
+SS { bar }
+${NAME default}
+@{git rev-parse HEAD}
+@@{pkgconf --libs foo}
+^{prefix ${NAME}}
+%{main.o}
+
+---
+
+(source_file
+  (rule
+    name: (rule_name)
+    body: (literal))
+  (rule
+    name: (rule_name)
+    body: (literal))
+  (rule
+    name: (rule_name)
+    body: (literal)
+    body: (literal))
+  (rule
+    name: (rule_name)
+    body: (literal)
+    body: (literal)
+    body: (literal))
+  (rule
+    name: (rule_name)
+    body: (literal)
+    body: (literal)
+    body: (literal))
+  (rule
+    name: (rule_name)
+    body: (literal)
+    body: (rule
+      name: (rule_name)
+      body: (literal)))
+  (rule
+    name: (rule_name)
+    body: (literal)))
+
+==================
+Adjacent top-level rules are valid
+==================
+
+a{}b{}
+
+---
+
+(source_file
+  (rule
+    name: (rule_name))
+  (rule
+    name: (rule_name)))
+
+==================
+Negation spread and escapes
+==================
+
+if {!defined { DEBUG }
+  set { FLAGS ..${FLAGS} escaped\{brace\} escaped\\slash }
+}
+
+---
+
+(source_file
+  (rule
+    name: (rule_name)
+    body: (rule
+      name: (rule_name)
+      body: (literal))
+    body: (rule
+      name: (rule_name)
+      body: (literal)
+      body: (rule
+        name: (rule_name)
+        body: (literal))
+      body: (literal)
+      body: (literal))))
+

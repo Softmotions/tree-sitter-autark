@@ -1,0 +1,45 @@
+# Example Autark script used by the grammar project.
+meta {
+  name { Hello }
+  description { 'Autark Tree-sitter example' }
+  version { 1.0.0 }
+}
+
+option { BUILD_TESTS Build tests }
+
+set {
+  CC
+  ${CC cc}
+}
+
+set {
+  CFLAGS
+  -std=c99
+  if { ${BUILD_TESTS}
+    -DTESTS=1
+  } else {
+    -DNDEBUG
+  }
+  ..${CFLAGS}
+}
+
+cc {
+  main.c
+  ${CFLAGS}
+  ${CC}
+  objects { CC_OBJS }
+}
+
+run {
+  always
+  exec { ${CC} -o hello ${CC_OBJS} }
+  consumes { ${CC_OBJS} }
+  produces { hello }
+}
+
+macro {
+  SAY
+  echo { &{1} }
+}
+
+call { SAY "done" }

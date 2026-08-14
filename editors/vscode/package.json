@@ -1,0 +1,45 @@
+{
+  "name": "autark-language",
+  "displayName": "Autark Language",
+  "description": "Registers Autark and configures Tree-sitter highlighting for VS Code.",
+  "version": "0.2.0",
+  "publisher": "softmotions",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.110.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "main": "./extension.js",
+  "activationEvents": [
+    "onStartupFinished",
+    "onLanguage:autark"
+  ],
+  "extensionDependencies": [
+    "AlecGhost.tree-sitter-vscode"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "autark",
+        "aliases": [
+          "Autark",
+          "autark"
+        ],
+        "extensions": [
+          ".autark"
+        ],
+        "filenames": [
+          "Autark"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "configurationDefaults": {
+      "[autark]": {
+        "editor.semanticHighlighting.enabled": true
+      }
+    }
+  }
+}

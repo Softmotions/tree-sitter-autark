@@ -1,0 +1,29 @@
+{
+  "grammars": [
+    {
+      "name": "autark",
+      "scope": "source.autark",
+      "path": ".",
+      "file-types": [
+        "autark",
+        "Autark"
+      ],
+      "highlights": "queries/highlights.scm"
+    }
+  ],
+  "metadata": {
+    "version": "0.1.5",
+    "license": "MIT",
+    "description": "Tree-sitter grammar for the Autark build-script DSL",
+    "authors": [
+      {
+        "name": "Softmotions Ltd",
+        "email": "info@softmotions.com"
+      }
+    ],
+    "links": {
+      "homepage": "https://autark.dev",
+      "repository": "https://github.com/Softmotions/tree-sitter-autark"
+    }
+  }
+}

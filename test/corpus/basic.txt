@@ -1,0 +1,121 @@
+==================
+Empty source
+==================
+
+
+---
+
+(source_file)
+
+==================
+Comments and top-level rules
+==================
+
+# leading comment
+meta { name { Autark } }
+
+# another comment
+check { checks.sh }
+
+---
+
+(source_file
+  (comment)
+  (rule
+    name: (rule_name)
+    body: (rule
+      name: (rule_name)
+      body: (literal)))
+  (comment)
+  (rule
+    name: (rule_name)
+    body: (literal)))
+
+==================
+Quoted and bare literals
+==================
+
+meta {
+  one
+  'two words'
+  "three words"
+  escaped\{value\}
+}
+
+---
+
+(source_file
+  (rule
+    name: (rule_name)
+    body: (literal)
+    body: (single_quoted_string)
+    body: (double_quoted_string)
+    body: (literal)))
+
+==================
+Nested special forms
+==================
+
+set {
+  CFLAGS
+  ..${CFLAGS}
+  if { !defined { DEBUG }
+    -DNDEBUG
+  } else {
+    -DDEBUG=1
+  }
+}
+
+---
+
+(source_file
+  (rule
+    name: (rule_name)
+    body: (literal)
+    body: (rule
+      name: (rule_name)
+      body: (literal))
+    body: (rule
+      name: (rule_name)
+      body: (rule
+        name: (rule_name)
+        body: (literal))
+      body: (literal))
+    body: (rule
+      name: (rule_name)
+      body: (literal))))
+
+==================
+Inline hash is not a comment
+==================
+
+meta { value #still-a-literal }
+
+---
+
+(source_file
+  (rule
+    name: (rule_name)
+    body: (literal)
+    body: (literal)))
+
+==================
+Whitespace and consecutive comments
+==================
+
+   
+# one
+  # two
+
+set { X value }
+
+---
+
+(source_file
+  (comment)
+  (comment)
+  (rule
+    name: (rule_name)
+    body: (literal)
+    body: (literal)))
+

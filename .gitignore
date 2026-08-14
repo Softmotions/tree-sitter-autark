@@ -1,0 +1,8 @@
+node_modules/
+build/
+*.wasm
+*.so
+*.dylib
+*.dll
+.DS_Store
+package-lock.json
