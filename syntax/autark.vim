@@ -32,9 +32,6 @@ syn match autarkPropertyRule /\%(^\|[{}[:space:]]\)\zs\%(name\|description\|vers
 " Build phases are language-defined block names.
 syn match autarkPhaseRule /\%(^\|[{}[:space:]]\)\zs\%(init\|setup\|build\|post-build\)\ze\_s*{/
 
-" `always` is a bare run modifier rather than a rule name.
-syn match autarkRunModifier /\<always\>/
-
 " Symbolic substitutions/helpers and source/path helpers. Negation is valid
 " for $, @, @@, ^, %, S, SS, C and CC; spread is valid only for `$`.
 syn match autarkSpecialRule /\%(^\|[{}[:space:]]\)\zs\%(\.\.\)\?\%(!\)\?\$\ze\_s*{/
@@ -62,7 +59,6 @@ hi def link autarkRuleName Function
 hi def link autarkKeywordRule Keyword
 hi def link autarkControlRule Operator
 hi def link autarkPropertyRule Identifier
-hi def link autarkRunModifier Keyword
 hi def link autarkSpecialRule Special
 hi def link autarkDelimiter Delimiter
 

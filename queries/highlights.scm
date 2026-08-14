@@ -75,7 +75,7 @@
    "and" "!and"
    "always"
    "parent" "root" "objects" "consumes" "produces" "exec" "shell"
-   "init" "setup" "build" "post-build" "post_build"
+   "init" "setup" "build" "post-build"
    "$" "!$" "..$"
    "@" "!@" "..@@"
    "@@" "!@@" "..@@"
