@@ -118,7 +118,18 @@
    "in-sources" "foreach"
    "cc" "cxx"
    "library" "install" "install-sources"
-   "macro" "call" "include" "fetch-url"))
+   "macro" "call" "include" "fetch-url"
+
+   "$" "!$" "..$"
+   "@" "!@" "..@"
+   "@@" "!@@" "..@@"
+   "^" "!^"
+   "%" "!%"
+   "S" "!S"
+   "SS" "!SS"
+   "C" "!C"
+   "CC" "!CC"
+   "&"))
 
 ; Built-in conditions. Conditions may be negated, but are not spread rules.
 ((rule
@@ -145,19 +156,3 @@
  (#any-of? @keyword
    "init" "setup" "build" "post-build" "post_build"))
 
-; Substitution/evaluation/path helper rules.
-; `!` is valid for $, @, @@, ^, %, S, SS, C and CC.
-; `..` is valid only for `$` in this group. `&` has no modifier.
-((rule
-   name: (rule_name) @function.builtin)
- (#any-of? @function.builtin
-   "$" "!$" "..$"
-   "@" "!@" "..@"
-   "@@" "!@@" "..@@"
-   "^" "!^"
-   "%" "!%"
-   "S" "!S"
-   "SS" "!SS"
-   "C" "!C"
-   "CC" "!CC"
-   "&"))
