@@ -1,0 +1,36 @@
+check {
+  system.sh
+  test_blocks.sh { IW_BLOCKS }
+}
+
+set {}
+!set {}
+..set {}
+..!set {}
+let {}
+!let {}
+..let {}
+..!let {}
+if {}
+!if {}
+defined {}
+!defined {}
+
+${X}
+!${X}
+..${X}
+..!${X}
+@{x}
+!@{x}
+C{x}
+!C{x}
+
+# Unsupported modifier combinations must not look like built-ins.
+!meta {}
+..meta {}
+..if {}
+..defined {}
+..@{x}
+..!@{x}
+..C{x}
+!&{x}

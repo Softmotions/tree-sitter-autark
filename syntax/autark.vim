@@ -17,12 +17,14 @@ syn match autarkLiteral /\%([^{}\\[:space:]]\|\\[{}\\nrt]\)\+/
 " Define this after autarkLiteral so rule names win when both start together.
 syn match autarkRuleName /\%([^{}\\[:space:]]\|\\[{}\\nrt]\)\+\ze\_s*{/
 
-" Primary Autark directives. Optional '..' and '!' prefixes are part of the
-" rule name and have the same highlighting as the directive itself.
-syn match autarkKeywordRule /\%(^\|[{}[:space:]]\)\zs\%((\.\.)\)\?\(!\)\?\%(meta\|option\|check\|set\|let\|env\|if\|else\|error\|echo\|configure\|run\|run-on-install\|in-sources\|foreach\|cc\|cxx\|library\|include\|install\|install-sources\|macro\|call\|fetch-url\)\ze\_s*{/
+" Primary Autark directives. Only set/let support both `!` and `..`; if
+" supports `!`; other directive names have no prefix modifier.
+syn match autarkKeywordRule /\%(^\|[{}[:space:]]\)\zs\%(meta\|option\|check\|env\|else\|error\|echo\|configure\|run\|run-on-install\|in-sources\|foreach\|cc\|cxx\|library\|include\|install\|install-sources\|macro\|call\|fetch-url\)\ze\_s*{/
+syn match autarkKeywordRule /\%(^\|[{}[:space:]]\)\zs\%(!\)\?if\ze\_s*{/
+syn match autarkKeywordRule /\%(^\|[{}[:space:]]\)\zs\%(\.\.\)\?\%(!\)\?\%(set\|let\)\ze\_s*{/
 
-" Built-in predicates/operators.
-syn match autarkControlRule /\%(^\|[{}[:space:]]\)\zs\%((\.\.)\)\?\(!\)\?\%(defined\|eq\|prefix\|contains\|or\|and\)\ze\_s*{/
+" Built-in predicates/operators may be negated but not spread.
+syn match autarkControlRule /\%(^\|[{}[:space:]]\)\zs\%(!\)\?\%(defined\|eq\|prefix\|contains\|or\|and\)\ze\_s*{/
 
 " Named fields/subsections of built-in blocks.
 syn match autarkPropertyRule /\%(^\|[{}[:space:]]\)\zs\%(name\|description\|version\|parent\|root\|objects\|consumes\|produces\|exec\|shell\)\ze\_s*{/
@@ -33,8 +35,11 @@ syn match autarkPhaseRule /\%(^\|[{}[:space:]]\)\zs\%(init\|setup\|build\|post-b
 " `always` is a bare run modifier rather than a rule name.
 syn match autarkRunModifier /\<always\>/
 
-" Symbolic substitutions/helpers and source/path helpers.
-syn match autarkSpecialRule /\%(^\|[{}[:space:]]\)\zs\%((\.\.)\)\?\(!\)\?\%(\$\|@\|@@\|\^\|%\|S\|SS\|C\|CC\|&\)\ze\_s*{/
+" Symbolic substitutions/helpers and source/path helpers. Negation is valid
+" for $, @, @@, ^, %, S, SS, C and CC; spread is valid only for `$`.
+syn match autarkSpecialRule /\%(^\|[{}[:space:]]\)\zs\%(\.\.\)\?\%(!\)\?\$\ze\_s*{/
+syn match autarkSpecialRule /\%(^\|[{}[:space:]]\)\zs\%(!\)\?\%(@@\|@\|\^\|%\|SS\|S\|CC\|C\)\ze\_s*{/
+syn match autarkSpecialRule /\%(^\|[{}[:space:]]\)\zs&\ze\_s*{/
 
 syn match autarkDelimiter /[{}]/
 
