@@ -68,9 +68,9 @@
    "name" "description" "version"
    "parent" "root" "objects" "consumes" "produces" "exec" "shell"
    "init" "setup" "build" "post-build" "post_build"
-   "$" "!$" "..$",
-   "@" "!@", "..@@",
-   "@@" "!@@", "..@@",
+   "$" "!$" "..$"
+   "@" "!@" "..@@"
+   "@@" "!@@" "..@@"
    "^" "!^"
    "%" "!%"
    "S" "!S"
@@ -129,8 +129,8 @@
    name: (rule_name) @function.builtin)
  (#any-of? @function.builtin
    "$" "!$" "..$"
-   "@" "!@", "..@"
-   "@@" "!@@", "..@@"
+   "@" "!@" "..@"
+   "@@" "!@@" "..@@"
    "^" "!^"
    "%" "!%"
    "S" "!S"
