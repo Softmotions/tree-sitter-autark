@@ -93,6 +93,8 @@
   "description"
   "website"
   "author"
+  "vendor"
+  "maintainer"
   "sources"
   "license"))
 
