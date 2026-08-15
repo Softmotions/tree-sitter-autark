@@ -15,6 +15,11 @@
     "fields": {}
   },
   {
+    "type": "condition_group",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "configure",
     "named": true,
     "fields": {}
@@ -153,6 +158,10 @@
           "named": true
         },
         {
+          "type": "condition_group",
+          "named": true
+        },
+        {
           "type": "configure",
           "named": true
         },
@@ -246,11 +255,19 @@
     }
   },
   {
+    "type": "!and",
+    "named": false
+  },
+  {
     "type": "!if",
     "named": false
   },
   {
     "type": "!let",
+    "named": false
+  },
+  {
+    "type": "!or",
     "named": false
   },
   {
@@ -263,6 +280,10 @@
   },
   {
     "type": "..set",
+    "named": false
+  },
+  {
+    "type": "and",
     "named": false
   },
   {
@@ -347,6 +368,10 @@
   },
   {
     "type": "option",
+    "named": false
+  },
+  {
+    "type": "or",
     "named": false
   },
   {

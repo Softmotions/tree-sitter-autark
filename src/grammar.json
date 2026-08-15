@@ -536,6 +536,42 @@
           "type": "ALIAS",
           "content": {
             "type": "SYMBOL",
+            "name": "_name_and"
+          },
+          "named": true,
+          "value": "condition_group"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_name_bang_and"
+          },
+          "named": true,
+          "value": "condition_group"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_name_or"
+          },
+          "named": true,
+          "value": "condition_group"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_name_bang_or"
+          },
+          "named": true,
+          "value": "condition_group"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
             "name": "_name_run"
           },
           "named": true,
@@ -702,6 +738,22 @@
         {
           "type": "SYMBOL",
           "name": "_name_bang_if"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_name_and"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_name_bang_and"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_name_or"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_name_bang_or"
         },
         {
           "type": "SYMBOL",
@@ -929,6 +981,50 @@
         "content": {
           "type": "STRING",
           "value": "!if"
+        }
+      }
+    },
+    "_name_and": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": 1,
+        "content": {
+          "type": "STRING",
+          "value": "and"
+        }
+      }
+    },
+    "_name_bang_and": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": 1,
+        "content": {
+          "type": "STRING",
+          "value": "!and"
+        }
+      }
+    },
+    "_name_or": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": 1,
+        "content": {
+          "type": "STRING",
+          "value": "or"
+        }
+      }
+    },
+    "_name_bang_or": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": 1,
+        "content": {
+          "type": "STRING",
+          "value": "!or"
         }
       }
     },

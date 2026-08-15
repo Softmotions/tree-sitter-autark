@@ -1,6 +1,6 @@
 {
   "name": "tree-sitter-autark",
-  "version": "0.1.11",
+  "version": "0.1.13",
   "description": "Tree-sitter grammar for the Autark build-script DSL",
   "license": "MIT",
   "repository": "https://github.com/Softmotions/tree-sitter-autark",

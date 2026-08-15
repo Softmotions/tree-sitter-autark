@@ -38,7 +38,7 @@ check {
   test_blocks.sh { IW_BLOCKS }
 }
 
-if {${MYVAR} 
+if { and { !eq {MYVAR MYVAR2} defined {V3} } 
   
 } else {
   echo { From else }

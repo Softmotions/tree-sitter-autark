@@ -29,7 +29,6 @@
                      (env) 
                      (set) 
                      (echo)
-                     (echo)
                      (check)
                      (configure)
                      (run) 
@@ -119,6 +118,7 @@
 
 ((rule 
    name: (rule_name [(set)
+                     (env)
                      (option)
                      (macro)
                      (foreach)])
@@ -130,3 +130,23 @@
    name: (rule_name (call))
    .
    body: (literal) @function.call))
+
+((rule
+   name: (rule_name (if))
+   body: (rule
+           name: (rule_name) @property))
+ (#any-of? @property
+  "defined" "!defined"
+  "eq" "!eq"
+  "prefix" "!prefix"
+  "and" "or"))
+
+((rule
+   name: (rule_name (condition_group))
+   body: (rule
+     name: (rule_name) @property))
+ (#any-of? @property
+   "defined" "!defined"
+   "eq" "!eq"
+   "prefix" "!prefix"
+   "and" "or"))

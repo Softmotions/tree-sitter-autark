@@ -9,11 +9,11 @@
         "Autark"
       ],
       "highlights": "queries/highlights.scm",
-      "version": "0.1.12"
+      "version": "0.1.13"
     }
   ],
   "metadata": {
-    "version": "0.1.12",
+    "version": "0.1.13",
     "license": "MIT",
     "description": "Tree-sitter grammar for the Autark build-script DSL",
     "authors": [
