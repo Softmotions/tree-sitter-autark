@@ -22,7 +22,8 @@ check { checks.sh }
 (source_file
   (comment)
   (rule
-    name: (rule_name)
+    name: (rule_name
+      (meta))
     body: (rule
       name: (rule_name)
       body: (literal)))
@@ -47,7 +48,8 @@ meta {
 
 (source_file
   (rule
-    name: (rule_name)
+    name: (rule_name
+      (meta))
     body: (literal)
     body: (single_quoted_string)
     body: (double_quoted_string)
@@ -99,7 +101,8 @@ meta { value #still-a-literal }
 
 (source_file
   (rule
-    name: (rule_name)
+    name: (rule_name
+      (meta))
     body: (literal)
     body: (literal)))
 

@@ -1,56 +1,92 @@
+# Highlight regression fixture for the current query model.
+
+meta {
+  name { demo }
+  vendor { Softmotions }
+}
+
+cc {
+  objects { CC_OBJS }
+  consumes { LIBA }
+  produces { app }
+}
+
+cxx {
+  objects { CXX_OBJS }
+}
+
+run {
+  always
+  exec { runner }
+  shell { /bin/sh }
+  consumes { CC_OBJS }
+  produces { app }
+}
+
+run-on-install {
+  always
+  exec { installer }
+}
+
+echo {
+  init { init-message }
+  setup { setup-message }
+  build { build-message }
+  post-build { post-message }
+}
+
 check {
   system.sh
   test_blocks.sh { IW_BLOCKS }
 }
 
-set {}
-!set {}
-..set {}
-..!set {}
-let {}
-!let {}
-..let {}
-..!let {}
-if {}
-!if {}
-defined {}
-!defined {}
+set {
+  parent { SET_PARENT }
+  value
+}
+
+let {
+  LET_NAME
+  value
+}
+
+env {
+  ENV_NAME
+  value
+}
+
+option { OPT_NAME "Enable option" }
+macro { MACRO_NAME body }
+foreach { ITEM LIST }
+
+library {
+  root { LIB_ROOT }
+}
+
+call { MACRO_NAME arg }
+
+if {
+  and {
+    !eq { A B }
+    defined { C }
+    or {
+      prefix { D E }
+    }
+  }
+  eq { F G }
+}
+
+!if { defined { H } }
+else { fallback }
+
+include { distr.autark }
+install-sources { src }
 
 ${X}
-!${X}
-..${X}
-..!${X}
-@{x}
-!@{x}
-C{x}
-!C{x}
+!@{cmd}
+..@{cmd}
+..@@{cmd}
+!C{file.c}
+&{1}
 
-# Unsupported modifier combinations must not look like built-ins.
-!meta {}
-..meta {}
-..if {}
-..defined {}
-..@{x}
-..!@{x}
-..C{x}
-!&{x}
-
-# Long set value list: every bare value after the variable name must be captured.
-set {
-  CFLAGS
-  -std=gnu11
-  -fsigned-char
-  -Wall
-  -Wextra
-  -Wfatal-errors
-  -Wno-implicit-fallthrough
-  -Wno-missing-braces
-  -Wno-missing-field-initializers
-  -Wno-sign-compare
-  -Wno-unknown-pragmas
-  -Wno-unused-function
-  -Wno-unused-parameter
-  -Wno-overlength-strings
-  -fPIC
-  ..@@{${PKGCONF} --cflags libiowow}
-}
+custom-rule { bare-value }

@@ -110,3 +110,159 @@ iffoo {}
     body: (literal))
   (rule
     name: (rule_name)))
+
+==================
+Directive aliases
+==================
+
+meta {}
+include {}
+option {}
+cc {}
+cxx {}
+env {}
+set {}
+!set {}
+..set {}
+let {}
+!let {}
+..let {}
+echo {}
+check {}
+configure {}
+run {}
+run-on-install {}
+in-sources {}
+foreach {}
+library {}
+install {}
+install-sources {}
+macro {}
+call {}
+
+---
+
+(source_file
+  (rule
+    (rule_name
+      (meta)))
+  (rule
+    (rule_name
+      (include)))
+  (rule
+    (rule_name
+      (option)))
+  (rule
+    (rule_name
+      (cc)))
+  (rule
+    (rule_name
+      (cc)))
+  (rule
+    (rule_name
+      (env)))
+  (rule
+    (rule_name
+      (set)))
+  (rule
+    (rule_name
+      (set)))
+  (rule
+    (rule_name
+      (set)))
+  (rule
+    (rule_name
+      (set)))
+  (rule
+    (rule_name
+      (set)))
+  (rule
+    (rule_name
+      (set)))
+  (rule
+    (rule_name
+      (echo)))
+  (rule
+    (rule_name
+      (check)))
+  (rule
+    (rule_name
+      (configure)))
+  (rule
+    (rule_name
+      (run)))
+  (rule
+    (rule_name
+      (run)))
+  (rule
+    (rule_name
+      (in_sources)))
+  (rule
+    (rule_name
+      (foreach)))
+  (rule
+    (rule_name
+      (library)))
+  (rule
+    (rule_name
+      (install)))
+  (rule
+    (rule_name
+      (install)))
+  (rule
+    (rule_name
+      (macro)))
+  (rule
+    (rule_name
+      (call))))
+
+==================
+Condition group aliases
+==================
+
+if {
+  and {
+    !eq { A B }
+    defined { C }
+    or { prefix { P Q } }
+  }
+}
+!and {}
+!or {}
+holder { and !and or !or }
+
+---
+
+(source_file
+  (rule
+    (rule_name
+      (if))
+    (rule
+      (rule_name
+        (condition_group))
+      (rule
+        (rule_name)
+        (literal)
+        (literal))
+      (rule
+        (rule_name)
+        (literal))
+      (rule
+        (rule_name
+          (condition_group))
+        (rule
+          (rule_name)
+          (literal)
+          (literal)))))
+  (rule
+    (rule_name
+      (condition_group)))
+  (rule
+    (rule_name
+      (condition_group)))
+  (rule
+    (rule_name)
+    (literal)
+    (literal)
+    (literal)
+    (literal)))

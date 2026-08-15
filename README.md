@@ -12,8 +12,9 @@ preprocessing performed by Autark itself. It recognizes:
 - Autark built-ins and special forms such as `${...}`, `@{...}`, `@@{...}`,
   `^{...}`, `%{...}`, `S{...}`, `SS{...}`, `C{...}`, `CC{...}` and `&{...}`.
 
-Highlight queries distinguish primary directives, condition/helper blocks,
-special forms, generic rule names, quoted strings, bare literals and comments.
+Highlight queries distinguish primary directives, contextual built-in fields and
+conditions, special forms, quoted strings and comments. Generic rule names and
+ordinary bare values are intentionally left uncaptured.
 
 ## Build and test
 
@@ -69,26 +70,25 @@ The result is normally `tree-sitter-autark.wasm` in the project root.
 
 ## Highlighting model
 
-The bundled Tree-sitter queries distinguish language directives, built-in
-fields and user-defined rules:
+The bundled Tree-sitter query is deliberately context-sensitive:
 
-- primary Autark directives such as `meta`, `set`, `cc` and `run` use
-  `@keyword`;
-- named built-in fields/subsections such as `name`, `description`, `version`,
-  `objects`, `exec`, `consumes` and `produces` use `@property`;
-- condition helpers such as `defined`, `eq`, `contains`, `or` and `and` use
-  `@keyword.operator`;
-- symbolic helpers such as `$`, `@`, `@@`, `^`, `S`, `SS`, `C` and `CC` use
-  `@function.builtin`;
-- unknown/custom rule names use `@function.call`;
-- check-script names inside `check { ... }` use `@function.call` in both bare and argument-bearing forms;
-- the bare `always` value inside `run`/`run-on-install` uses
-  `@keyword.modifier`;
-- quoted values use `@string`, while ordinary bare values use
-  `@string.special`.
+- primary directives such as `meta`, `set`, `let`, `cc`, `cxx`, `run`,
+  `run-on-install`, `include` and `install-sources` use `@keyword`;
+- `if`, `!if` and `else` use `@keyword.conditional`;
+- built-in child fields use `@property` only in the contexts where they are
+  meaningful: metadata fields under `meta`, build inputs/outputs under `cc` and
+  `run`, phases under `echo`, and conditions under `if` / `and` / `or` groups;
+- `always` inside `run` / `run-on-install` is also `@property`;
+- positional names such as the first argument of `set`, `let`, `env`, `option`,
+  `macro` and `foreach` use `@keyword.modifier`;
+- check-script names and the first argument of `call` use `@function.call`;
+- symbolic helpers such as `$`, `@`, `@@`, `^`, `%`, `S`, `SS`, `C`, `CC`
+  and `&` use `@function.builtin`;
+- quoted values use `@string`, comments use `@comment`, and braces use
+  `@punctuation.bracket`.
 
-This avoids assigning function semantics to built-in record-like fields and
-avoids overlapping captures for the same token.
+Generic/custom rule names and ordinary bare values are intentionally left
+uncaptured by the current query.
 
 ## Vim
 
@@ -181,6 +181,10 @@ Useful checks:
 
 ## Neovim
 
+`queries/highlights.scm` and `queries/folds.scm` are the single canonical query
+files for all integrations. Current `nvim-treesitter` installs them into its
+Neovim runtime layout automatically.
+
 ### Install Neovim with vim-plug
 
 If you use vim-plug, install `tree-sitter-autark` as a normal Neovim plugin
@@ -189,7 +193,6 @@ alongside `nvim-treesitter`:
 ```vim
 call plug#begin()
 
-" Use the nvim-treesitter branch appropriate for your Neovim version.
 Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'Softmotions/tree-sitter-autark'
 
@@ -214,19 +217,15 @@ only when the Autark parser is not already installed. No extra Autark Lua
 configuration and no manually specified checkout path are required. The runtime
 plugin:
 
-- detects both the current `nvim-treesitter` API and the frozen legacy
-  `master` API;
 - registers `Autark` and `*.autark` as the `autark` filetype;
 - registers the **existing vim-plug checkout** as the parser source, avoiding a
   second clone of `tree-sitter-autark`;
-- exposes the bundled `editors/nvim/queries/autark/*.scm` runtime queries;
+- uses the canonical `queries/*.scm` files directly, without a duplicated Neovim query tree;
 - automatically runs `:TSInstall autark` on the first startup when the parser
   is missing;
 - starts Neovim's Tree-sitter highlighter when the parser is available;
 - keeps the native Vim syntax files as a fallback until parser installation
-  completes;
-- regenerates the parser for the Neovim-supported Tree-sitter ABI when the
-  frozen legacy `nvim-treesitter master` API is detected.
+  completes.
 
 Automatic parser installation can be disabled before `plug#end()` if you want
 to manage parsers manually:
@@ -261,7 +260,7 @@ https://github.com/Softmotions/tree-sitter-autark
 
 A separate local checkout of the grammar is not required.
 
-#### Current nvim-treesitter `main` (Neovim 0.12+)
+#### nvim-treesitter `main` (Neovim 0.12+)
 
 Install the provided configuration into your Neovim config, for example:
 
@@ -309,54 +308,7 @@ To update the installed parser and queries later:
 :TSUpdate autark
 ```
 
-#### Frozen nvim-treesitter `master` (Neovim 0.10-0.11)
-
-Use the legacy configuration instead:
-
-```sh
-mkdir -p ~/.config/nvim/plugin
-curl -fLo ~/.config/nvim/plugin/tree-sitter-autark.lua \
-  https://raw.githubusercontent.com/Softmotions/tree-sitter-autark/main/editors/nvim/autark-master.lua
-```
-
-Then restart Neovim and run:
-
-```vim
-:TSInstall autark
-```
-
-For this legacy path, keep `tree-sitter` CLI and Node.js available. The parser
-is regenerated from `grammar.js` with the ABI supported by that Neovim version,
-which avoids trying to load the repository's checked-in ABI 15 `src/parser.c`
-on older Neovim releases. The source still comes directly from the GitHub
-repository:
-
-```lua
-install_info = {
-  url = 'https://github.com/Softmotions/tree-sitter-autark',
-  branch = 'main',
-  files = { 'src/parser.c' },
-  generate_requires_npm = false,
-  requires_generate_from_grammar = true,
-}
-```
-
-The frozen `nvim-treesitter` branch does not copy custom queries from grammar
-repositories. `autark-master.lua` therefore automatically maintains a shallow
-checkout of this same repository under:
-
-```text
-stdpath('data')/tree-sitter-autark-runtime
-```
-
-and adds its `editors/nvim` directory to `runtimepath` so `queries/autark/*.scm` can be found.
-To update that query checkout explicitly:
-
-```vim
-:AutarkTSUpdateQueries
-```
-
-Useful checks for either Neovim setup:
+Useful checks:
 
 ```vim
 :set filetype?
@@ -465,18 +417,28 @@ not needed when the installer is used.
 
 ## Highlighting policy
 
-`queries/highlights.scm` uses these categories:
+`queries/highlights.scm` currently uses these captures:
 
-| Syntax | Capture |
+| Syntax / context | Capture |
 |---|---|
-| primary directives (`set`, `if`, `run`, `cc`, ...) | `@keyword` |
-| conditions / structural child blocks | `@keyword` |
-| special forms (`$`, `@`, `@@`, `^`, `%`, `S`, ...) | `@function.builtin` |
-| other rule names | `@function.call` |
-| quoted literals | `@string` |
-| bare literals | `@string.special` |
+| primary directives (`meta`, `include`, `cc`/`cxx`, `env`, `set`/`let`, `echo`, `check`, `configure`, `run`/`run-on-install`, `in-sources`, `foreach`, `library`, `install`/`install-sources`, `macro`, `call`, `option`) | `@keyword` |
+| `if`, `!if`, `else` | `@keyword.conditional` |
+| `objects`, `consumes`, `produces` inside `cc` / `cxx` | `@property` |
+| `exec`, `shell`, `consumes`, `produces`, and bare `always` inside `run` / `run-on-install` | `@property` |
+| `init`, `setup`, `build` inside `echo` | `@property` |
+| `name`, `version`, `version_major`, `version_minor`, `version_patch`, `description`, `website`, `author`, `vendor`, `maintainer`, `sources`, `license` inside `meta` | `@property` |
+| `parent` / `root` blocks under `set` / `let` or `library` | `@property` |
+| `defined`, `!defined`, `eq`, `!eq`, `prefix`, `!prefix`, `and`, `or` when used directly under `if` or inside an `and` / `or` condition group | `@property` |
+| first direct literal of `set` / `let`, `env`, `option`, `macro`, `foreach`; first literal inside `parent` / `root` blocks | `@keyword.modifier` |
+| direct check-script names and rule-form check scripts inside `check`; first literal of `call` | `@function.call` |
+| symbolic helpers (`$`, `!$`, `..$`, `@`, `!@`, `..@`, `@@`, `!@@`, `..@@`, `^`, `!^`, `%`, `!%`, `S`, `!S`, `SS`, `!SS`, `C`, `!C`, `CC`, `!CC`, `&`) | `@function.builtin` |
+| single- and double-quoted values | `@string` |
 | whole-line comments | `@comment` |
 | braces | `@punctuation.bracket` |
+
+The current query deliberately has no generic fallback capture for arbitrary
+rule names or ordinary bare literals. They remain unhighlighted unless one of
+the contextual rules above applies.
 
 ## Notes on compatibility with Autark
 
@@ -487,11 +449,11 @@ RULE  = STRP _ '{' _ (VALR (__ VALR)*)? _ '}'
 VALR  = STRQ | STRQQ | RULE | STRP
 ```
 
-This grammar therefore does not hard-code the full set of allowed rule names.
-Unknown/custom rule names still parse as normal `rule` nodes and are highlighted
-as generic function-like calls. Built-in names are a highlighting concern, not
-a syntactic restriction. This is important for Autark's extensibility and for
-nested bag-style blocks.
+This grammar therefore does not restrict the set of allowed rule names. Selected
+built-ins receive named aliases so context-sensitive queries can recognize them,
+while unknown/custom names still parse as normal `rule` nodes. The current
+highlight query leaves those generic rule names uncaptured. This preserves
+Autark's extensibility and nested bag-style blocks.
 
 The Autark preprocessor removes only lines whose first non-whitespace character
 is `#`. Consequently, this is a comment:
