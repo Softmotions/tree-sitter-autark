@@ -1,12 +1,16 @@
 TREE_SITTER ?= tree-sitter
 
-.PHONY: generate test build wasm highlight clean
+.PHONY: generate test test-highlight build wasm highlight clean
 
 generate:
 	$(TREE_SITTER) generate
 
 test: generate
 	$(TREE_SITTER) test
+	TREE_SITTER="$(TREE_SITTER)" ./test/highlight-regression.sh
+
+test-highlight: generate
+	TREE_SITTER="$(TREE_SITTER)" ./test/highlight-regression.sh
 
 build: generate
 	$(TREE_SITTER) build

@@ -1,6 +1,81 @@
 [
   {
+    "type": "call",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "cc",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "check",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "configure",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "echo",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "else",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "env",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "foreach",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "if",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "in_sources",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "install",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "library",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "literal",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "macro",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "meta",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "option",
     "named": true,
     "fields": {}
   },
@@ -55,6 +130,90 @@
   {
     "type": "rule_name",
     "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "call",
+          "named": true
+        },
+        {
+          "type": "cc",
+          "named": true
+        },
+        {
+          "type": "check",
+          "named": true
+        },
+        {
+          "type": "configure",
+          "named": true
+        },
+        {
+          "type": "echo",
+          "named": true
+        },
+        {
+          "type": "else",
+          "named": true
+        },
+        {
+          "type": "env",
+          "named": true
+        },
+        {
+          "type": "foreach",
+          "named": true
+        },
+        {
+          "type": "if",
+          "named": true
+        },
+        {
+          "type": "in_sources",
+          "named": true
+        },
+        {
+          "type": "install",
+          "named": true
+        },
+        {
+          "type": "library",
+          "named": true
+        },
+        {
+          "type": "macro",
+          "named": true
+        },
+        {
+          "type": "meta",
+          "named": true
+        },
+        {
+          "type": "option",
+          "named": true
+        },
+        {
+          "type": "run",
+          "named": true
+        },
+        {
+          "type": "set",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "run",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "set",
+    "named": true,
     "fields": {}
   },
   {
@@ -78,12 +237,116 @@
     }
   },
   {
+    "type": "!if",
+    "named": false
+  },
+  {
+    "type": "!let",
+    "named": false
+  },
+  {
+    "type": "!set",
+    "named": false
+  },
+  {
+    "type": "..let",
+    "named": false
+  },
+  {
+    "type": "..set",
+    "named": false
+  },
+  {
+    "type": "call",
+    "named": false
+  },
+  {
+    "type": "cc",
+    "named": false
+  },
+  {
+    "type": "check",
+    "named": false
+  },
+  {
     "type": "comment",
     "named": true
   },
   {
+    "type": "configure",
+    "named": false
+  },
+  {
+    "type": "cxx",
+    "named": false
+  },
+  {
     "type": "double_quoted_string",
     "named": true
+  },
+  {
+    "type": "echo",
+    "named": false
+  },
+  {
+    "type": "else",
+    "named": false
+  },
+  {
+    "type": "env",
+    "named": false
+  },
+  {
+    "type": "foreach",
+    "named": false
+  },
+  {
+    "type": "if",
+    "named": false
+  },
+  {
+    "type": "in-sources",
+    "named": false
+  },
+  {
+    "type": "install",
+    "named": false
+  },
+  {
+    "type": "install-sources",
+    "named": false
+  },
+  {
+    "type": "let",
+    "named": false
+  },
+  {
+    "type": "library",
+    "named": false
+  },
+  {
+    "type": "macro",
+    "named": false
+  },
+  {
+    "type": "meta",
+    "named": false
+  },
+  {
+    "type": "option",
+    "named": false
+  },
+  {
+    "type": "run",
+    "named": false
+  },
+  {
+    "type": "run-on-install",
+    "named": false
+  },
+  {
+    "type": "set",
+    "named": false
   },
   {
     "type": "single_quoted_string",

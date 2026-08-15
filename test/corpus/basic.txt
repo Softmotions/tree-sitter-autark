@@ -28,7 +28,8 @@ check { checks.sh }
       body: (literal)))
   (comment)
   (rule
-    name: (rule_name)
+    name: (rule_name
+      (check))
     body: (literal)))
 
 ==================
@@ -70,19 +71,22 @@ set {
 
 (source_file
   (rule
-    name: (rule_name)
+    name: (rule_name
+      (set))
     body: (literal)
     body: (rule
       name: (rule_name)
       body: (literal))
     body: (rule
-      name: (rule_name)
+      name: (rule_name
+        (if))
       body: (rule
         name: (rule_name)
         body: (literal))
       body: (literal))
     body: (rule
-      name: (rule_name)
+      name: (rule_name
+        (else))
       body: (literal))))
 
 ==================
@@ -115,7 +119,7 @@ set { X value }
   (comment)
   (comment)
   (rule
-    name: (rule_name)
+    name: (rule_name
+      (set))
     body: (literal)
     body: (literal)))
-

@@ -69,12 +69,14 @@ if {!defined { DEBUG }
 
 (source_file
   (rule
-    name: (rule_name)
+    name: (rule_name
+      (if))
     body: (rule
       name: (rule_name)
       body: (literal))
     body: (rule
-      name: (rule_name)
+      name: (rule_name
+        (set))
       body: (literal)
       body: (rule
         name: (rule_name)
@@ -82,3 +84,29 @@ if {!defined { DEBUG }
       body: (literal)
       body: (literal))))
 
+==================
+If and else aliases
+==================
+
+!if { foo }
+else { bar }
+holder { if else }
+iffoo {}
+
+---
+
+(source_file
+  (rule
+    name: (rule_name
+      (if))
+    body: (literal))
+  (rule
+    name: (rule_name
+      (else))
+    body: (literal))
+  (rule
+    name: (rule_name)
+    body: (literal)
+    body: (literal))
+  (rule
+    name: (rule_name)))

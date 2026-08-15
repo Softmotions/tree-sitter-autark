@@ -15,15 +15,11 @@ if script:sub(1, 1) == '@' then
 end
 
 local root = vim.fn.fnamemodify(script, ':p:h:h')
-local nvim_runtime = root .. '/editors/nvim'
 
--- The canonical Tree-sitter queries are kept in queries/*.scm for the CLI and
--- current nvim-treesitter. The editors/nvim runtime directory contains the
--- queries/autark/*.scm layout expected by Neovim's runtime query lookup.
-local rtp = vim.opt.runtimepath:get()
-if not vim.tbl_contains(rtp, nvim_runtime) then
-  vim.opt.runtimepath:append(nvim_runtime)
-end
+-- queries/*.scm is the single canonical query source. Current nvim-treesitter
+-- installs/links this directory itself. For setups where no runtime query file
+-- is present (notably the frozen legacy branch or a manually installed parser),
+-- load the same canonical files directly through Neovim's query API.
 
 vim.filetype.add({
   filename = {
@@ -72,18 +68,64 @@ end
 
 register_parser()
 
--- nvim-treesitter reloads its parser table before install/update operations on
--- current `main`, so register the custom parser again at that point.
-vim.api.nvim_create_autocmd('User', {
-  pattern = 'TSUpdate',
-  callback = register_parser,
-})
-
 -- Test parser availability by asking Neovim to instantiate a parser. This is
 -- more robust than checking a platform-specific shared-library suffix.
 local function parser_available()
   return pcall(vim.treesitter.get_string_parser, '', 'autark')
 end
+
+local function read_file(path)
+  local file = io.open(path, 'rb')
+  if not file then
+    return nil
+  end
+  local text = file:read('*a')
+  file:close()
+  return text
+end
+
+local loaded_fallback_queries = {}
+
+local function ensure_queries()
+  if not parser_available() then
+    return false
+  end
+
+  for _, name in ipairs({ 'highlights', 'folds' }) do
+    -- Respect an installed/user-provided runtime query. Only install an explicit
+    -- query when Neovim cannot find one through runtimepath.
+    local files = vim.treesitter.query.get_files('autark', name)
+    if #files == 0 and not loaded_fallback_queries[name] then
+      local text = read_file(root .. '/queries/' .. name .. '.scm')
+      if text then
+        local ok, err = pcall(vim.treesitter.query.set, 'autark', name, text)
+        if not ok then
+          vim.schedule(function()
+            vim.notify(
+              'tree-sitter-autark: failed to load ' .. name .. ' query: ' .. tostring(err),
+              vim.log.levels.ERROR
+            )
+          end)
+          return false
+        end
+        loaded_fallback_queries[name] = true
+      end
+    end
+  end
+
+  return true
+end
+
+-- nvim-treesitter reloads its parser table before install/update operations on
+-- current `main`, so register the custom parser again at that point.
+vim.api.nvim_create_autocmd('User', {
+  pattern = 'TSUpdate',
+  callback = function()
+    register_parser()
+    loaded_fallback_queries = {}
+    ensure_queries()
+  end,
+})
 
 local function install_parser_if_missing()
   -- Set this to 0 before plugin loading to keep parser installation manual.
@@ -118,6 +160,7 @@ vim.api.nvim_create_autocmd('VimEnter', {
   once = true,
   callback = function()
     register_parser()
+    ensure_queries()
     install_parser_if_missing()
   end,
 })
@@ -131,6 +174,7 @@ vim.treesitter.language.register('autark', 'autark')
 vim.api.nvim_create_autocmd('FileType', {
   pattern = 'autark',
   callback = function(args)
+    ensure_queries()
     local ok = pcall(vim.treesitter.start, args.buf, 'autark')
     if ok then
       -- Do not run Vim regex syntax and Tree-sitter highlighting together.

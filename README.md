@@ -1,14 +1,112 @@
-# Tree-sitter based syntax highlighting for Autark scripts
+# tree-sitter-autark
 
 Tree-sitter grammar for the [Autark](https://autark.dev) build-script DSL.
 
-## Vim 8+
+The grammar follows Autark's PEG grammar in `scriptx.leg` and the comment
+preprocessing performed by Autark itself. It recognizes:
+
+- nested `rule { ... }` blocks;
+- unquoted literals with Autark escape sequences;
+- single- and double-quoted literals;
+- whole-line `#` comments (only when `#` is the first non-whitespace character);
+- Autark built-ins and special forms such as `${...}`, `@{...}`, `@@{...}`,
+  `^{...}`, `%{...}`, `S{...}`, `SS{...}`, `C{...}`, `CC{...}` and `&{...}`.
+
+Highlight queries distinguish primary directives, condition/helper blocks,
+special forms, generic rule names, quoted strings, bare literals and comments.
+
+## Build and test
+
+Requirements:
+
+- Tree-sitter CLI 0.26.x;
+- Node.js on `PATH` for `tree-sitter generate` (or `--js-runtime native` with Tree-sitter 0.26+);
+- a C/C++ compiler for parser builds and tests.
+
+```sh
+tree-sitter generate
+tree-sitter test
+tree-sitter highlight examples/Autark
+```
+
+Or:
+
+```sh
+make test
+make highlight
+```
+
+### Verified toolchain
+
+The checked-in generated parser was produced and validated with Tree-sitter CLI
+`0.26.12` using ABI 15. The following checks pass:
+
+```sh
+tree-sitter generate --abi 15
+tree-sitter test
+tree-sitter build
+tree-sitter parse examples/Autark
+tree-sitter highlight examples/Autark
+```
+
+The corpus currently covers nested rules, quoted and bare literals, Autark
+escapes, special forms, negation/spread prefixes, exact whole-line comment
+semantics, adjacent top-level rules, and whitespace/comment edge cases.
+
+### Build the WASM parser
+
+VS Code integration below uses a WASM parser with ABI 15:
+
+```sh
+tree-sitter generate --abi 15
+tree-sitter build --wasm
+```
+
+With recent Tree-sitter CLI versions, `build --wasm` downloads the required
+WASI SDK automatically on first use.
+
+The result is normally `tree-sitter-autark.wasm` in the project root.
+
+## Highlighting model
+
+The bundled Tree-sitter queries distinguish language directives, built-in
+fields and user-defined rules:
+
+- primary Autark directives such as `meta`, `set`, `cc` and `run` use
+  `@keyword`;
+- named built-in fields/subsections such as `name`, `description`, `version`,
+  `objects`, `exec`, `consumes` and `produces` use `@property`;
+- condition helpers such as `defined`, `eq`, `contains`, `or` and `and` use
+  `@keyword.operator`;
+- symbolic helpers such as `$`, `@`, `@@`, `^`, `S`, `SS`, `C` and `CC` use
+  `@function.builtin`;
+- unknown/custom rule names use `@function.call`;
+- check-script names inside `check { ... }` use `@function.call` in both bare and argument-bearing forms;
+- the bare `always` value inside `run`/`run-on-install` uses
+  `@keyword.modifier`;
+- quoted values use `@string`, while ordinary bare values use
+  `@string.special`.
+
+This avoids assigning function semantics to built-in record-like fields and
+avoids overlapping captures for the same token.
+
+## Vim
 
 Vim 8+ can use this repository directly as a native package. Vim itself does
 not provide a built-in API for arbitrary Tree-sitter parsers, so the Vim
 integration uses standard `ftdetect/`, `syntax/` and `ftplugin/` runtime files.
 It mirrors the Tree-sitter highlighting policy closely without requiring
 Neovim, `nvim-treesitter`, Node.js or the Tree-sitter CLI.
+
+The Vim integration provides:
+
+- filetype detection for `Autark` and `*.autark`;
+- highlighting for primary directives and helper rules;
+- highlighting for symbolic forms such as `${...}`, `@{...}`, `^{...}` and
+  `S{...}`;
+- quoted and bare literals;
+- Autark's whole-line `#` comment semantics;
+- brace delimiters and basic `commentstring`/`comments` settings.
 
 ### Install with Vim's native package support
 
@@ -106,7 +204,29 @@ Then run:
 
 Restart Neovim. No separate `:TSInstall autark` command is required: on the
 first startup after installation, `plugin/tree-sitter-autark.lua` registers the
-custom parser.
+custom parser and automatically invokes:
+
+```vim
+:TSInstall autark
+```
+
+only when the Autark parser is not already installed. No extra Autark Lua
+configuration and no manually specified checkout path are required. The runtime
+plugin:
+
+- detects both the current `nvim-treesitter` API and the frozen legacy
+  `master` API;
+- registers `Autark` and `*.autark` as the `autark` filetype;
+- registers the **existing vim-plug checkout** as the parser source, avoiding a
+  second clone of `tree-sitter-autark`;
+- exposes the bundled `editors/nvim/queries/autark/*.scm` runtime queries;
+- automatically runs `:TSInstall autark` on the first startup when the parser
+  is missing;
+- starts Neovim's Tree-sitter highlighter when the parser is available;
+- keeps the native Vim syntax files as a fallback until parser installation
+  completes;
+- regenerates the parser for the Neovim-supported Tree-sitter ABI when the
+  frozen legacy `nvim-treesitter master` API is detected.
 
 Automatic parser installation can be disabled before `plug#end()` if you want
 to manage parsers manually:
@@ -388,3 +508,11 @@ One pathological edge case is intentionally documented rather than hidden: Autar
 
 MIT.
 
+
+## Parser generation note
+
+Version 0.1.1 requires the `_line_break` rule to remain right-associative; this resolves the Tree-sitter ambiguity between indentation belonging to a comment line and ordinary spacing after a newline.
+
+## Neovim query compatibility
+
+Version 0.1.8 uses `#any-of?` / `#not-any-of?` for built-in rule-name highlighting instead of regular-expression predicates. This is intentional: Autark has symbolic rule names such as `@` and `@@`, while Neovim evaluates `#match?` using very-magic Vim regular expressions. Exact string predicates avoid regexp escaping differences and are also a better fit for finite keyword lists.

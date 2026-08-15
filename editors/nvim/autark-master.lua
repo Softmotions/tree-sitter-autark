@@ -3,7 +3,8 @@
 --
 -- Unlike current nvim-treesitter `main`, the frozen branch does not install
 -- custom query files from grammar repositories. This script therefore keeps a
--- shallow Git checkout under stdpath('data') only for queries/runtime files.
+-- shallow Git checkout under stdpath('data') and loads the repository's canonical
+-- queries/*.scm files directly through Neovim's Tree-sitter query API.
 local repo = 'https://github.com/Softmotions/tree-sitter-autark'
 local query_checkout = vim.fn.stdpath('data') .. '/tree-sitter-autark-runtime'
 
@@ -35,6 +36,42 @@ local function register_parser()
   }
 end
 
+local function read_file(path)
+  local file = io.open(path, 'rb')
+  if not file then
+    return nil
+  end
+  local text = file:read('*a')
+  file:close()
+  return text
+end
+
+local function load_queries()
+  local ok_parser = pcall(vim.treesitter.get_string_parser, '', 'autark')
+  if not ok_parser then
+    return false
+  end
+
+  for _, name in ipairs({ 'highlights', 'folds' }) do
+    local text = read_file(query_checkout .. '/queries/' .. name .. '.scm')
+    if not text then
+      return false
+    end
+    local ok, err = pcall(vim.treesitter.query.set, 'autark', name, text)
+    if not ok then
+      vim.schedule(function()
+        vim.notify(
+          'tree-sitter-autark: failed to load ' .. name .. ' query: ' .. tostring(err),
+          vim.log.levels.ERROR
+        )
+      end)
+      return false
+    end
+  end
+
+  return true
+end
+
 local function ensure_query_checkout(update)
   if vim.fn.executable('git') ~= 1 then
     vim.schedule(function()
@@ -62,7 +99,7 @@ local function ensure_query_checkout(update)
     return false
   end
 
-  vim.opt.runtimepath:prepend(query_checkout .. '/editors/nvim')
+  load_queries()
   return true
 end
 
@@ -71,7 +108,17 @@ ensure_query_checkout(false)
 
 vim.api.nvim_create_autocmd('VimEnter', {
   once = true,
-  callback = register_parser,
+  callback = function()
+    register_parser()
+    load_queries()
+  end,
+})
+
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'autark',
+  callback = function()
+    load_queries()
+  end,
 })
 
 vim.api.nvim_create_user_command('AutarkTSUpdateQueries', function()

@@ -29,9 +29,6 @@ syn match autarkControlRule /\%(^\|[{}[:space:]]\)\zs\%(!\)\?\%(defined\|eq\|pre
 " Named fields/subsections of built-in blocks.
 syn match autarkPropertyRule /\%(^\|[{}[:space:]]\)\zs\%(name\|description\|version\|parent\|root\|objects\|consumes\|produces\|exec\|shell|always\)\ze\_s*{/
 
-" Build phases are language-defined block names.
-syn match autarkPhaseRule /\%(^\|[{}[:space:]]\)\zs\%(init\|setup\|build\|post-build\)\ze\_s*{/
-
 " Symbolic substitutions/helpers and source/path helpers. Negation is valid
 " for $, @, @@, ^, %, S, SS, C and CC; spread is valid only for `$`.
 syn match autarkSpecialRule /\%(^\|[{}[:space:]]\)\zs\%(\.\.\)\?\%(!\)\?\$\ze\_s*{/

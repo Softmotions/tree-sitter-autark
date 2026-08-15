@@ -1,26 +1,6 @@
-# Example Autark script used by the grammar project.
 meta {
-  name { Hello }
-  description { 'Autark Tree-sitter example' }
+  name { test autark }
   version { 1.0.0 }
-}
-
-option { BUILD_TESTS Build tests }
-
-set {
-  CC
-  ${CC cc}
-}
-
-set {
-  CFLAGS
-  -std=c99
-  if { ${BUILD_TESTS}
-    -DTESTS=1
-  } else {
-    -DNDEBUG
-  }
-  ..${CFLAGS}
 }
 
 cc {
@@ -28,6 +8,7 @@ cc {
   ${CFLAGS}
   ${CC}
   objects { CC_OBJS }
+  consumes { ${A_LIB} }
 }
 
 run {
@@ -37,9 +18,89 @@ run {
   produces { hello }
 }
 
-macro {
-  SAY
-  echo { &{1} }
+foo {
+  bar
 }
 
-call { SAY "done" }
+echo {
+  "Fooo" ${BAR}
+  build {
+    "Hello"
+  }
+  init {
+    "Hello from init"
+    YES
+  }
+}
+
+check {
+  foo.sh
+  test_blocks.sh { IW_BLOCKS }
+}
+
+if {${MYVAR} 
+  
+} else {
+  echo { From else }
+}
+
+set {
+  MYVAR
+  val1
+  val2
+}
+
+set {
+  parent {
+    MYVAR
+  }
+  val1
+  val2
+}
+
+set {
+  root {
+    MYVAR
+    dd
+  }
+  if {${COND}
+    val1
+  } else {
+    val2
+  }
+}
+
+option { ENABLE_ABC "Enable ABC feature"}
+option { ENABLE_ABC Enable ABC feature}
+
+
+macro {
+  M_ECHO
+  let {
+    JOIN
+    ^{&{1} ' ' &{2}}
+  }
+  
+  echo { JOIN ${JOIN} }
+}
+
+call {
+  M_ECHO
+  'foo bar'
+  baz
+}
+
+foreach {
+  OBJ
+  ${CC_OBJS}
+  run {
+    exec { ${CC} ${OBJ} ${LIBAUTARK} -o %{${OBJ}} }
+    produces {
+      %{${OBJ}}
+    }
+    consumes {
+      ${LIBAUTARK}
+      ${OBJ}
+    }
+  }
+}

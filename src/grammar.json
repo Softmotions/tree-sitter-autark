@@ -368,12 +368,655 @@
       }
     },
     "rule_name": {
-      "type": "SYMBOL",
-      "name": "_atom"
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_name_meta"
+          },
+          "named": true,
+          "value": "meta"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_name_option"
+          },
+          "named": true,
+          "value": "option"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_name_cc"
+          },
+          "named": true,
+          "value": "cc"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_name_cxx"
+          },
+          "named": true,
+          "value": "cc"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_name_env"
+          },
+          "named": true,
+          "value": "env"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_name_set"
+          },
+          "named": true,
+          "value": "set"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_name_bang_set"
+          },
+          "named": true,
+          "value": "set"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_name_spread_set"
+          },
+          "named": true,
+          "value": "set"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_name_let"
+          },
+          "named": true,
+          "value": "set"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_name_bang_let"
+          },
+          "named": true,
+          "value": "set"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_name_spread_let"
+          },
+          "named": true,
+          "value": "set"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_name_echo"
+          },
+          "named": true,
+          "value": "echo"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_name_check"
+          },
+          "named": true,
+          "value": "check"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_name_configure"
+          },
+          "named": true,
+          "value": "configure"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_name_if"
+          },
+          "named": true,
+          "value": "if"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_name_bang_if"
+          },
+          "named": true,
+          "value": "if"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_name_else"
+          },
+          "named": true,
+          "value": "else"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_name_run"
+          },
+          "named": true,
+          "value": "run"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_name_run_on_install"
+          },
+          "named": true,
+          "value": "run"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_name_in_sources"
+          },
+          "named": true,
+          "value": "in_sources"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_name_foreach"
+          },
+          "named": true,
+          "value": "foreach"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_name_library"
+          },
+          "named": true,
+          "value": "library"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_name_install"
+          },
+          "named": true,
+          "value": "install"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_name_install_sources"
+          },
+          "named": true,
+          "value": "install"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_name_macro"
+          },
+          "named": true,
+          "value": "macro"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_name_call"
+          },
+          "named": true,
+          "value": "call"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_atom"
+        }
+      ]
     },
     "literal": {
-      "type": "SYMBOL",
-      "name": "_atom"
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "_aliased_name_atom"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_atom"
+        }
+      ]
+    },
+    "_aliased_name_atom": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "_name_meta"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_name_option"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_name_cc"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_name_cxx"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_name_env"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_name_set"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_name_bang_set"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_name_spread_set"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_name_let"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_name_bang_let"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_name_spread_let"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_name_echo"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_name_check"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_name_configure"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_name_if"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_name_bang_if"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_name_else"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_name_run"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_name_run_on_install"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_name_in_sources"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_name_foreach"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_name_library"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_name_install"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_name_install_sources"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_name_macro"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_name_call"
+        }
+      ]
+    },
+    "_name_meta": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": 1,
+        "content": {
+          "type": "STRING",
+          "value": "meta"
+        }
+      }
+    },
+    "_name_option": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": 1,
+        "content": {
+          "type": "STRING",
+          "value": "option"
+        }
+      }
+    },
+    "_name_cc": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": 1,
+        "content": {
+          "type": "STRING",
+          "value": "cc"
+        }
+      }
+    },
+    "_name_cxx": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": 1,
+        "content": {
+          "type": "STRING",
+          "value": "cxx"
+        }
+      }
+    },
+    "_name_env": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": 1,
+        "content": {
+          "type": "STRING",
+          "value": "env"
+        }
+      }
+    },
+    "_name_set": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": 1,
+        "content": {
+          "type": "STRING",
+          "value": "set"
+        }
+      }
+    },
+    "_name_bang_set": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": 1,
+        "content": {
+          "type": "STRING",
+          "value": "!set"
+        }
+      }
+    },
+    "_name_spread_set": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": 1,
+        "content": {
+          "type": "STRING",
+          "value": "..set"
+        }
+      }
+    },
+    "_name_let": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": 1,
+        "content": {
+          "type": "STRING",
+          "value": "let"
+        }
+      }
+    },
+    "_name_bang_let": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": 1,
+        "content": {
+          "type": "STRING",
+          "value": "!let"
+        }
+      }
+    },
+    "_name_spread_let": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": 1,
+        "content": {
+          "type": "STRING",
+          "value": "..let"
+        }
+      }
+    },
+    "_name_echo": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": 1,
+        "content": {
+          "type": "STRING",
+          "value": "echo"
+        }
+      }
+    },
+    "_name_check": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": 1,
+        "content": {
+          "type": "STRING",
+          "value": "check"
+        }
+      }
+    },
+    "_name_configure": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": 1,
+        "content": {
+          "type": "STRING",
+          "value": "configure"
+        }
+      }
+    },
+    "_name_if": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": 1,
+        "content": {
+          "type": "STRING",
+          "value": "if"
+        }
+      }
+    },
+    "_name_bang_if": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": 1,
+        "content": {
+          "type": "STRING",
+          "value": "!if"
+        }
+      }
+    },
+    "_name_else": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": 1,
+        "content": {
+          "type": "STRING",
+          "value": "else"
+        }
+      }
+    },
+    "_name_run": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": 1,
+        "content": {
+          "type": "STRING",
+          "value": "run"
+        }
+      }
+    },
+    "_name_run_on_install": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": 1,
+        "content": {
+          "type": "STRING",
+          "value": "run-on-install"
+        }
+      }
+    },
+    "_name_in_sources": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": 1,
+        "content": {
+          "type": "STRING",
+          "value": "in-sources"
+        }
+      }
+    },
+    "_name_foreach": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": 1,
+        "content": {
+          "type": "STRING",
+          "value": "foreach"
+        }
+      }
+    },
+    "_name_library": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": 1,
+        "content": {
+          "type": "STRING",
+          "value": "library"
+        }
+      }
+    },
+    "_name_install": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": 1,
+        "content": {
+          "type": "STRING",
+          "value": "install"
+        }
+      }
+    },
+    "_name_install_sources": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": 1,
+        "content": {
+          "type": "STRING",
+          "value": "install-sources"
+        }
+      }
+    },
+    "_name_macro": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": 1,
+        "content": {
+          "type": "STRING",
+          "value": "macro"
+        }
+      }
+    },
+    "_name_call": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": 1,
+        "content": {
+          "type": "STRING",
+          "value": "call"
+        }
+      }
     },
     "single_quoted_string": {
       "type": "TOKEN",
@@ -403,6 +1046,10 @@
     [
       "rule_name",
       "literal"
+    ],
+    [
+      "rule_name",
+      "_aliased_name_atom"
     ]
   ],
   "precedences": [],
