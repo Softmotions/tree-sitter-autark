@@ -122,6 +122,7 @@
                      (env)
                      (option)
                      (macro)
+                     (library)
                      (foreach)])
    .
    body: (literal) @keyword.modifier))
