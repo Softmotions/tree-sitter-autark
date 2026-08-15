@@ -617,6 +617,15 @@
           "type": "ALIAS",
           "content": {
             "type": "SYMBOL",
+            "name": "_name_bang_library"
+          },
+          "named": true,
+          "value": "library"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
             "name": "_name_install"
           },
           "named": true,
@@ -787,6 +796,10 @@
         {
           "type": "SYMBOL",
           "name": "_name_library"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_name_bang_library"
         },
         {
           "type": "SYMBOL",
@@ -1104,6 +1117,17 @@
         "content": {
           "type": "STRING",
           "value": "library"
+        }
+      }
+    },
+    "_name_bang_library": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": 1,
+        "content": {
+          "type": "STRING",
+          "value": "!library"
         }
       }
     },

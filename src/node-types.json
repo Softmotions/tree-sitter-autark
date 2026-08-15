@@ -276,6 +276,10 @@
     "named": false
   },
   {
+    "type": "!library",
+    "named": false
+  },
+  {
     "type": "!or",
     "named": false
   },
