@@ -469,12 +469,3 @@ One pathological edge case is intentionally documented rather than hidden: Autar
 ## License
 
 MIT.
-
-
-## Parser generation note
-
-Version 0.1.1 requires the `_line_break` rule to remain right-associative; this resolves the Tree-sitter ambiguity between indentation belonging to a comment line and ordinary spacing after a newline.
-
-## Neovim query compatibility
-
-Version 0.1.8 uses `#any-of?` / `#not-any-of?` for built-in rule-name highlighting instead of regular-expression predicates. This is intentional: Autark has symbolic rule names such as `@` and `@@`, while Neovim evaluates `#match?` using very-magic Vim regular expressions. Exact string predicates avoid regexp escaping differences and are also a better fit for finite keyword lists.
