@@ -150,6 +150,7 @@ module.exports = grammar({
       alias($._name_install_sources, $.install),
       alias($._name_macro, $.macro),
       alias($._name_call, $.call),
+      alias($._name_error, $.error),
       $._atom,
     ),
 
@@ -190,6 +191,7 @@ module.exports = grammar({
       $._name_install_sources,
       $._name_macro,
       $._name_call,
+      $._name_error,
     ),
 
     _name_meta: _ => token(prec(1, 'meta')),
@@ -223,6 +225,7 @@ module.exports = grammar({
     _name_install_sources: _ => token(prec(1, 'install-sources')),
     _name_macro: _ => token(prec(1, 'macro')),
     _name_call: _ => token(prec(1, 'call')),
+    _name_error: _ => token(prec(1, 'error')),
 
     // STRQ / STRQQ contain everything up to the matching quote; Autark does
     // not define C-style escapes inside quoted strings.

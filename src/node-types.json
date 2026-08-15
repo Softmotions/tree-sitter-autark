@@ -40,6 +40,11 @@
     "fields": {}
   },
   {
+    "type": "error",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "foreach",
     "named": true,
     "fields": {}
@@ -175,6 +180,10 @@
         },
         {
           "type": "env",
+          "named": true
+        },
+        {
+          "type": "error",
           "named": true
         },
         {
@@ -324,6 +333,10 @@
   },
   {
     "type": "env",
+    "named": false
+  },
+  {
+    "type": "error",
     "named": false
   },
   {

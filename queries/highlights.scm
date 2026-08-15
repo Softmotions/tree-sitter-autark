@@ -39,6 +39,7 @@
                      (macro) 
                      (call) 
                      (option)
+                     (error)
                      ]) @keyword))
 
 ((rule

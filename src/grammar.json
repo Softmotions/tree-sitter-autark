@@ -650,6 +650,15 @@
           "value": "call"
         },
         {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_name_error"
+          },
+          "named": true,
+          "value": "error"
+        },
+        {
           "type": "SYMBOL",
           "name": "_atom"
         }
@@ -794,6 +803,10 @@
         {
           "type": "SYMBOL",
           "name": "_name_call"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_name_error"
         }
       ]
     },
@@ -1135,6 +1148,17 @@
         "content": {
           "type": "STRING",
           "value": "call"
+        }
+      }
+    },
+    "_name_error": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": 1,
+        "content": {
+          "type": "STRING",
+          "value": "error"
         }
       }
     },
