@@ -141,6 +141,7 @@
   "defined" "!defined"
   "eq" "!eq"
   "prefix" "!prefix"
+  "contains" "!contains"
   "and" "or"))
 
 ((rule
@@ -151,4 +152,5 @@
    "defined" "!defined"
    "eq" "!eq"
    "prefix" "!prefix"
+   "contains" "!contains"
    "and" "or"))
