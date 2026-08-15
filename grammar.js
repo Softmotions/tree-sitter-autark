@@ -120,6 +120,7 @@ module.exports = grammar({
     // `literal`, so values such as `${CC cc}` remain plain literals.
     rule_name: $ => choice(
       alias($._name_meta, $.meta),
+      alias($._name_include, $.include),
       alias($._name_option, $.option),
       alias($._name_cc, $.cc),
       alias($._name_cxx, $.cc),
@@ -155,6 +156,7 @@ module.exports = grammar({
 
     _aliased_name_atom: $ => choice(
       $._name_meta,
+      $._name_include,
       $._name_option,
       $._name_cc,
       $._name_cxx,
@@ -183,6 +185,7 @@ module.exports = grammar({
     ),
 
     _name_meta: _ => token(prec(1, 'meta')),
+    _name_include: _ => token(prec(1, 'include')),
     _name_option: _ => token(prec(1, 'option')),
     _name_cc: _ => token(prec(1, 'cc')),
     _name_cxx: _ => token(prec(1, 'cxx')),

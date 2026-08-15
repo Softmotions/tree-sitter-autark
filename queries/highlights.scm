@@ -24,6 +24,7 @@
 ((rule
    name: (rule_name [
                      (meta)
+                     (include)
                      (cc) 
                      (env) 
                      (set) 

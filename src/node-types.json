@@ -50,6 +50,11 @@
     "fields": {}
   },
   {
+    "type": "include",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "install",
     "named": true,
     "fields": {}
@@ -173,6 +178,10 @@
         },
         {
           "type": "in_sources",
+          "named": true
+        },
+        {
+          "type": "include",
           "named": true
         },
         {
@@ -306,6 +315,10 @@
   },
   {
     "type": "in-sources",
+    "named": false
+  },
+  {
+    "type": "include",
     "named": false
   },
   {
