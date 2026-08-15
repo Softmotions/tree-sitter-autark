@@ -32,7 +32,6 @@
                      (echo)
                      (check)
                      (configure)
-                     (if)
                      (run) 
                      (in_sources) 
                      (foreach) 
