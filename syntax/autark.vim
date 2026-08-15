@@ -30,7 +30,7 @@ syn match autarkConditionGroup /\%(^\|[{}[:space:]]\)\zs\%(and\|!and\|or\|!or\)\
 
 " Condition predicates used by the current Tree-sitter highlighting rules. Vim
 " syntax has no AST context, so classify these by name wherever they are rules.
-syn match autarkConditionProperty /\%(^\|[{}[:space:]]\)\zs\%(defined\|!defined\|eq\|!eq\|prefix\|!prefix\)\ze\_s*{/
+syn match autarkConditionProperty /\%(^\|[{}[:space:]]\)\zs\%(defined\|!defined\|contains\|!contains\|eq\|!eq\|prefix\|!prefix\)\ze\_s*{/
 
 " Symbolic built-ins from queries/highlights.scm. These are deliberately exact:
 " spread and negation are not combined unless an exact form is listed here.
