@@ -19,7 +19,7 @@ syn match autarkRuleName /\%([^{}\\[:space:]]\|\\[{}\\nrt]\)\+\ze\_s*{/
 
 " Named directive aliases from grammar.js. Keep the prefixed variants explicit:
 " the grammar aliases !set/..set and !let/..let, but not combined ..! forms.
-syn match autarkKeywordRule /\%(^\|[{}[:space:]]\)\zs\%(meta\|include\|option\|cc\|cxx\|env\|echo\|check\|configure\|run\|run-on-install\|in-sources\|foreach\|library\|install\|install-sources\|macro\|call\)\ze\_s*{/
+syn match autarkKeywordRule /\%(^\|[{}[:space:]]\)\zs\%(meta\|include\|option\|cc\|cxx\|env\|echo\|error\|check\|configure\|run\|run-on-install\|in-sources\|foreach\|library\|install\|install-sources\|macro\|call\)\ze\_s*{/
 syn match autarkKeywordRule /\%(^\|[{}[:space:]]\)\zs\%(set\|!set\|\.\.set\|let\|!let\|\.\.let\)\ze\_s*{/
 
 " Conditional aliases. if/!if share one grammar alias; else is separate.
