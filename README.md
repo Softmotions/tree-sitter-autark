@@ -194,7 +194,7 @@ alongside `nvim-treesitter`:
 call plug#begin()
 
 Plug 'nvim-treesitter/nvim-treesitter'
-Plug 'Softmotions/tree-sitter-autark'
+Plug 'Softmotions/tree-sitter-autark', { 'do': ':TSUpdate autark' }
 
 call plug#end()
 ```
