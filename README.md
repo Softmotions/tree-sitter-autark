@@ -408,6 +408,84 @@ VSCODE_EXTENSIONS_DIR="$HOME/.vscode-oss/extensions" \
 `editors/vscode/settings.example.json` remains only as a manual fallback and is
 not needed when the installer is used.
 
+### Alternative: TextMate-only install
+
+If only syntax highlighting is required, Autark can be installed as a regular
+VS Code TextMate language extension. This mode uses:
+
+```text
+editors/textmate/autark.tmLanguage.json
+```
+
+and does **not** require `AlecGhost.tree-sitter-vscode`, Tree-sitter CLI, a WASM
+parser or Node.js.
+
+From a checkout of this repository, install a small unpacked extension into the
+VS Code extensions directory:
+
+```sh
+EXT_DIR="${VSCODE_EXTENSIONS_DIR:-$HOME/.vscode/extensions}/softmotions.autark-textmate"
+
+mkdir -p "$EXT_DIR/syntaxes"
+cp editors/textmate/autark.tmLanguage.json "$EXT_DIR/syntaxes/"
+cp editors/vscode/language-configuration.json "$EXT_DIR/"
+
+cat > "$EXT_DIR/package.json" <<'EOF_TM'
+{
+  "name": "autark-textmate",
+  "displayName": "Autark TextMate",
+  "description": "TextMate syntax highlighting for Autark build scripts",
+  "version": "0.1.0",
+  "publisher": "softmotions",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": ["Programming Languages"],
+  "contributes": {
+    "languages": [
+      {
+        "id": "autark",
+        "aliases": ["Autark", "autark"],
+        "extensions": [".autark"],
+        "filenames": ["Autark"],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "autark",
+        "scopeName": "source.autark",
+        "path": "./syntaxes/autark.tmLanguage.json"
+      }
+    ]
+  }
+}
+EOF_TM
+```
+
+Restart VS Code after installation. `Autark` and `*.autark` files should then
+be detected as the `autark` language and highlighted by the TextMate grammar.
+
+For Code - OSS or VSCodium, set `VSCODE_EXTENSIONS_DIR` to the corresponding
+extensions directory before running the commands above.
+
+To update the TextMate grammar after updating the repository, copy the grammar
+again and reload VS Code:
+
+```sh
+cp editors/textmate/autark.tmLanguage.json \
+  "${VSCODE_EXTENSIONS_DIR:-$HOME/.vscode/extensions}/softmotions.autark-textmate/syntaxes/"
+```
+
+For debugging, VS Code's `Developer: Inspect Editor Tokens and Scopes` command
+shows the TextMate scope assigned to the token under the cursor.
+
+The TextMate grammar is regex/state based rather than AST based, so some deeply
+context-sensitive cases can be approximated less precisely than by the
+Tree-sitter query. Use the Tree-sitter/WASM integration when this distinction is
+important.
+
+
 ## Highlighting policy
 
 `queries/highlights.scm` currently uses these captures:

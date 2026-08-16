@@ -1,0 +1,25 @@
+{
+  "name": "autark-textmate-vscode-test",
+  "displayName": "Autark TextMate VSCode Test",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "contributes": {
+    "languages": [
+      {
+        "id": "autark",
+        "aliases": ["Autark"],
+        "extensions": [".autark"],
+        "filenames": ["Autark"]
+      }
+    ],
+    "grammars": [
+      {
+        "language": "autark",
+        "scopeName": "source.autark",
+        "path": "./autark.tmLanguage.json"
+      }
+    ]
+  }
+}

@@ -1,0 +1,715 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Autark",
+  "scopeName": "source.autark",
+  "fileTypes": [
+    "autark",
+    "Autark"
+  ],
+  "patterns": [
+    {
+      "include": "#comments"
+    },
+    {
+      "include": "#strings"
+    },
+    {
+      "include": "#special-block"
+    },
+    {
+      "include": "#if-block"
+    },
+    {
+      "include": "#else-block"
+    },
+    {
+      "include": "#meta-block"
+    },
+    {
+      "include": "#cc-block"
+    },
+    {
+      "include": "#run-block"
+    },
+    {
+      "include": "#echo-block"
+    },
+    {
+      "include": "#check-block"
+    },
+    {
+      "include": "#set-library-block"
+    },
+    {
+      "include": "#modifier-block"
+    },
+    {
+      "include": "#call-block"
+    },
+    {
+      "include": "#simple-keyword-block"
+    },
+    {
+      "include": "#generic-rule"
+    },
+    {
+      "include": "#stray-braces"
+    }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        {
+          "match": "^[ \\t]*(#.*)$",
+          "captures": {
+            "1": {
+              "name": "comment.line.number-sign.autark"
+            }
+          }
+        }
+      ]
+    },
+    "strings": {
+      "patterns": [
+        {
+          "name": "string.quoted.single.autark",
+          "begin": "'",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.definition.string.begin.autark"
+            }
+          },
+          "end": "'",
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.definition.string.end.autark"
+            }
+          }
+        },
+        {
+          "name": "string.quoted.double.autark",
+          "begin": "\"",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.definition.string.begin.autark"
+            }
+          },
+          "end": "\"",
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.definition.string.end.autark"
+            }
+          }
+        }
+      ]
+    },
+    "special-block": {
+      "begin": "(?<![^\\s{}])((?:\\.\\.(?:@@|@|\\$)|!(?:@@|@|\\$|\\^|%|SS|S|CC|C)|@@|@|\\$|\\^|%|SS|S|CC|C|&))[ \\t\\r\\n]*(\\{)",
+      "beginCaptures": {
+        "1": {
+          "name": "support.function.builtin.autark"
+        },
+        "2": {
+          "name": "punctuation.section.block.begin.autark"
+        }
+      },
+      "end": "\\}",
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.section.block.end.autark"
+        }
+      },
+      "patterns": [
+        {
+          "include": "$self"
+        }
+      ]
+    },
+    "cc-property-block": {
+      "patterns": [
+        {
+          "begin": "(?<![^\\s{}])((?:consumes|produces|objects))[ \\t\\r\\n]*(\\{)",
+          "beginCaptures": {
+            "1": {
+              "name": "variable.other.property.autark"
+            },
+            "2": {
+              "name": "punctuation.section.block.begin.autark"
+            }
+          },
+          "end": "\\}",
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.section.block.end.autark"
+            }
+          },
+          "patterns": [
+            {
+              "include": "$self"
+            }
+          ]
+        }
+      ]
+    },
+    "run-property-block": {
+      "patterns": [
+        {
+          "begin": "(?<![^\\s{}])((?:consumes|produces|exec|shell))[ \\t\\r\\n]*(\\{)",
+          "beginCaptures": {
+            "1": {
+              "name": "variable.other.property.autark"
+            },
+            "2": {
+              "name": "punctuation.section.block.begin.autark"
+            }
+          },
+          "end": "\\}",
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.section.block.end.autark"
+            }
+          },
+          "patterns": [
+            {
+              "include": "$self"
+            }
+          ]
+        }
+      ]
+    },
+    "if-else-build-property-block": {
+      "patterns": [
+        {
+          "begin": "(?<![^\\s{}])((?:consumes|produces|objects|exec|shell))[ \\t\\r\\n]*(\\{)",
+          "beginCaptures": {
+            "1": {
+              "name": "variable.other.property.autark"
+            },
+            "2": {
+              "name": "punctuation.section.block.begin.autark"
+            }
+          },
+          "end": "\\}",
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.section.block.end.autark"
+            }
+          },
+          "patterns": [
+            {
+              "include": "$self"
+            }
+          ]
+        }
+      ]
+    },
+    "echo-property-block": {
+      "patterns": [
+        {
+          "begin": "(?<![^\\s{}])((?:build|setup|init))[ \\t\\r\\n]*(\\{)",
+          "beginCaptures": {
+            "1": {
+              "name": "variable.other.property.autark"
+            },
+            "2": {
+              "name": "punctuation.section.block.begin.autark"
+            }
+          },
+          "end": "\\}",
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.section.block.end.autark"
+            }
+          },
+          "patterns": [
+            {
+              "include": "$self"
+            }
+          ]
+        }
+      ]
+    },
+    "meta-property-block": {
+      "patterns": [
+        {
+          "begin": "(?<![^\\s{}])((?:name|version_major|version_minor|version_patch|version|description|website|author|vendor|maintainer|sources|license))[ \\t\\r\\n]*(\\{)",
+          "beginCaptures": {
+            "1": {
+              "name": "variable.other.property.autark"
+            },
+            "2": {
+              "name": "punctuation.section.block.begin.autark"
+            }
+          },
+          "end": "\\}",
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.section.block.end.autark"
+            }
+          },
+          "patterns": [
+            {
+              "include": "$self"
+            }
+          ]
+        }
+      ]
+    },
+    "condition-property-block": {
+      "patterns": [
+        {
+          "begin": "(?<![^\\s{}])((?:!?(?:defined|eq|prefix|contains)))[ \\t\\r\\n]*(\\{)",
+          "beginCaptures": {
+            "1": {
+              "name": "variable.other.property.autark"
+            },
+            "2": {
+              "name": "punctuation.section.block.begin.autark"
+            }
+          },
+          "end": "\\}",
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.section.block.end.autark"
+            }
+          },
+          "patterns": [
+            {
+              "include": "$self"
+            }
+          ]
+        }
+      ]
+    },
+    "condition-group-block": {
+      "begin": "(?<![^\\s{}])((?:and|or))[ \\t\\r\\n]*(\\{)",
+      "beginCaptures": {
+        "1": {
+          "name": "variable.other.property.autark"
+        },
+        "2": {
+          "name": "punctuation.section.block.begin.autark"
+        }
+      },
+      "end": "\\}",
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.section.block.end.autark"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#condition-property-block"
+        },
+        {
+          "include": "#condition-group-block"
+        },
+        {
+          "include": "$self"
+        }
+      ]
+    },
+    "if-block": {
+      "begin": "(?<![^\\s{}])((?:!if|if))[ \\t\\r\\n]*(\\{)",
+      "beginCaptures": {
+        "1": {
+          "name": "keyword.control.conditional.autark"
+        },
+        "2": {
+          "name": "punctuation.section.block.begin.autark"
+        }
+      },
+      "end": "\\}",
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.section.block.end.autark"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#if-else-build-property-block"
+        },
+        {
+          "include": "#condition-property-block"
+        },
+        {
+          "include": "#condition-group-block"
+        },
+        {
+          "include": "$self"
+        }
+      ]
+    },
+    "else-block": {
+      "begin": "(?<![^\\s{}])(else)[ \\t\\r\\n]*(\\{)",
+      "beginCaptures": {
+        "1": {
+          "name": "keyword.control.conditional.autark"
+        },
+        "2": {
+          "name": "punctuation.section.block.begin.autark"
+        }
+      },
+      "end": "\\}",
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.section.block.end.autark"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#if-else-build-property-block"
+        },
+        {
+          "include": "$self"
+        }
+      ]
+    },
+    "meta-block": {
+      "begin": "(?<![^\\s{}])(meta)[ \\t\\r\\n]*(\\{)",
+      "beginCaptures": {
+        "1": {
+          "name": "keyword.control.directive.autark"
+        },
+        "2": {
+          "name": "punctuation.section.block.begin.autark"
+        }
+      },
+      "end": "\\}",
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.section.block.end.autark"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#meta-property-block"
+        },
+        {
+          "include": "$self"
+        }
+      ]
+    },
+    "cc-block": {
+      "begin": "(?<![^\\s{}])((?:cxx|cc))[ \\t\\r\\n]*(\\{)",
+      "beginCaptures": {
+        "1": {
+          "name": "keyword.control.directive.autark"
+        },
+        "2": {
+          "name": "punctuation.section.block.begin.autark"
+        }
+      },
+      "end": "\\}",
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.section.block.end.autark"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#cc-property-block"
+        },
+        {
+          "include": "$self"
+        }
+      ]
+    },
+    "run-block": {
+      "begin": "(?<![^\\s{}])((?:run-on-install|run))[ \\t\\r\\n]*(\\{)",
+      "beginCaptures": {
+        "1": {
+          "name": "keyword.control.directive.autark"
+        },
+        "2": {
+          "name": "punctuation.section.block.begin.autark"
+        }
+      },
+      "end": "\\}",
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.section.block.end.autark"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#run-property-block"
+        },
+        {
+          "name": "variable.other.property.autark",
+          "match": "(?<![^\\s{}])(always)(?=$|[\\s}])",
+          "captures": {
+            "1": {
+              "name": "variable.other.property.autark"
+            }
+          }
+        },
+        {
+          "include": "$self"
+        }
+      ]
+    },
+    "echo-block": {
+      "begin": "(?<![^\\s{}])(echo)[ \\t\\r\\n]*(\\{)",
+      "beginCaptures": {
+        "1": {
+          "name": "keyword.control.directive.autark"
+        },
+        "2": {
+          "name": "punctuation.section.block.begin.autark"
+        }
+      },
+      "end": "\\}",
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.section.block.end.autark"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#echo-property-block"
+        },
+        {
+          "include": "$self"
+        }
+      ]
+    },
+    "check-script-block": {
+      "begin": "(?<![^\\s{}])((?:[^{}\\\\ \\t\\r\\n]|\\\\[{}\\\\nrt])+)[ \\t\\r\\n]*(\\{)",
+      "beginCaptures": {
+        "1": {
+          "name": "entity.name.function.autark"
+        },
+        "2": {
+          "name": "punctuation.section.block.begin.autark"
+        }
+      },
+      "end": "\\}",
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.section.block.end.autark"
+        }
+      },
+      "patterns": [
+        {
+          "include": "$self"
+        }
+      ]
+    },
+    "check-block": {
+      "begin": "(?<![^\\s{}])(check)[ \\t\\r\\n]*(\\{)",
+      "beginCaptures": {
+        "1": {
+          "name": "keyword.control.directive.autark"
+        },
+        "2": {
+          "name": "punctuation.section.block.begin.autark"
+        }
+      },
+      "end": "\\}",
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.section.block.end.autark"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#comments"
+        },
+        {
+          "include": "#strings"
+        },
+        {
+          "include": "#check-script-block"
+        },
+        {
+          "match": "(?<![^\\s{}])((?>(?:[^{}\\\\ \\t\\r\\n]|\\\\[{}\\\\nrt])+))(?![ \\t\\r\\n]*\\{)(?=$|[\\s}])",
+          "captures": {
+            "1": {
+              "name": "entity.name.function.autark"
+            }
+          }
+        },
+        {
+          "include": "$self"
+        }
+      ]
+    },
+    "first-modifier": {
+      "patterns": [
+        {
+          "match": "\\G(?:(?:[ \\t\\r\\n]+)|(?:[ \\t]*#[^\\r\\n]*(?:\\r\\n|\\n|\\r)))*((?>(?:[^{}\\\\ \\t\\r\\n]|\\\\[{}\\\\nrt])+))(?![ \\t\\r\\n]*\\{)",
+          "captures": {
+            "1": {
+              "name": "storage.modifier.autark"
+            }
+          }
+        }
+      ]
+    },
+    "parent-root-block": {
+      "begin": "(?<![^\\s{}])((?:parent|root))[ \\t\\r\\n]*(\\{)",
+      "beginCaptures": {
+        "1": {
+          "name": "variable.other.property.autark"
+        },
+        "2": {
+          "name": "punctuation.section.block.begin.autark"
+        }
+      },
+      "end": "\\}",
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.section.block.end.autark"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#first-modifier"
+        },
+        {
+          "include": "$self"
+        }
+      ]
+    },
+    "set-library-block": {
+      "begin": "(?<![^\\s{}])((?:\\.\\.(?:set|let)|!(?:set|let)|set|let|!library|library))[ \\t\\r\\n]*(\\{)",
+      "beginCaptures": {
+        "1": {
+          "name": "keyword.control.directive.autark"
+        },
+        "2": {
+          "name": "punctuation.section.block.begin.autark"
+        }
+      },
+      "end": "\\}",
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.section.block.end.autark"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#first-modifier"
+        },
+        {
+          "include": "#parent-root-block"
+        },
+        {
+          "include": "$self"
+        }
+      ]
+    },
+    "modifier-block": {
+      "begin": "(?<![^\\s{}])((?:env|option|macro|foreach))[ \\t\\r\\n]*(\\{)",
+      "beginCaptures": {
+        "1": {
+          "name": "keyword.control.directive.autark"
+        },
+        "2": {
+          "name": "punctuation.section.block.begin.autark"
+        }
+      },
+      "end": "\\}",
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.section.block.end.autark"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#first-modifier"
+        },
+        {
+          "include": "$self"
+        }
+      ]
+    },
+    "call-first-function": {
+      "patterns": [
+        {
+          "match": "\\G(?:(?:[ \\t\\r\\n]+)|(?:[ \\t]*#[^\\r\\n]*(?:\\r\\n|\\n|\\r)))*((?>(?:[^{}\\\\ \\t\\r\\n]|\\\\[{}\\\\nrt])+))(?![ \\t\\r\\n]*\\{)",
+          "captures": {
+            "1": {
+              "name": "entity.name.function.autark"
+            }
+          }
+        }
+      ]
+    },
+    "call-block": {
+      "begin": "(?<![^\\s{}])(call)[ \\t\\r\\n]*(\\{)",
+      "beginCaptures": {
+        "1": {
+          "name": "keyword.control.directive.autark"
+        },
+        "2": {
+          "name": "punctuation.section.block.begin.autark"
+        }
+      },
+      "end": "\\}",
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.section.block.end.autark"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#call-first-function"
+        },
+        {
+          "include": "$self"
+        }
+      ]
+    },
+    "simple-keyword-block": {
+      "begin": "(?<![^\\s{}])((?:include|configure|in-sources|install-sources|install|error))[ \\t\\r\\n]*(\\{)",
+      "beginCaptures": {
+        "1": {
+          "name": "keyword.control.directive.autark"
+        },
+        "2": {
+          "name": "punctuation.section.block.begin.autark"
+        }
+      },
+      "end": "\\}",
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.section.block.end.autark"
+        }
+      },
+      "patterns": [
+        {
+          "include": "$self"
+        }
+      ]
+    },
+    "generic-rule": {
+      "begin": "(?<![^\\s{}])((?:[^{}\\\\ \\t\\r\\n]|\\\\[{}\\\\nrt])+)[ \\t\\r\\n]*(\\{)",
+      "beginCaptures": {
+        "2": {
+          "name": "punctuation.section.block.begin.autark"
+        }
+      },
+      "end": "\\}",
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.section.block.end.autark"
+        }
+      },
+      "patterns": [
+        {
+          "include": "$self"
+        }
+      ]
+    },
+    "stray-braces": {
+      "patterns": [
+        {
+          "name": "punctuation.section.block.autark",
+          "match": "[{}]"
+        }
+      ]
+    }
+  }
+}
