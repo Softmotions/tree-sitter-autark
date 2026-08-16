@@ -5,13 +5,6 @@ Tree-sitter grammar for the [Autark](https://autark.dev) build-script DSL.
 The grammar follows Autark's PEG grammar in `scriptx.leg` and the comment
 preprocessing performed by Autark itself. It recognizes:
 
-- nested `rule { ... }` blocks;
-- unquoted literals with Autark escape sequences;
-- single- and double-quoted literals;
-- whole-line `#` comments (only when `#` is the first non-whitespace character);
-- Autark built-ins and special forms such as `${...}`, `@{...}`, `@@{...}`,
-  `^{...}`, `%{...}`, `S{...}`, `SS{...}`, `C{...}`, `CC{...}` and `&{...}`.
-
 Highlight queries distinguish primary directives, contextual built-in fields and
 conditions, special forms, quoted strings and comments. Generic rule names and
 ordinary bare values are intentionally left uncaptured.
