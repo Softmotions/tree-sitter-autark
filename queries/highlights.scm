@@ -50,7 +50,7 @@
 
 
 ((rule
-   name: (rule_name (cc))
+   name: (rule_name [(cc) (if) (else)])
    body: (rule name: (rule_name) @property))
  (#any-of? @property
    "consumes"
@@ -58,7 +58,7 @@
    "objects"))
    
 ((rule
-   name: (rule_name (run))
+   name: (rule_name [(run) (if) (else)])
    body: (rule name: (rule_name) @property))
  (#any-of? @property
   "consumes"
