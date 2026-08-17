@@ -6,6 +6,7 @@
 (double_quoted_string) @string
 
 ["{" "}"] @punctuation.bracket
+(literal) @literal
 
 ((rule
    name: (rule_name) @function.builtin)
@@ -155,3 +156,5 @@
    "prefix" "!prefix"
    "contains" "!contains"
    "and" "or"))
+
+
