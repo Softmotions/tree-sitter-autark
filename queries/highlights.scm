@@ -90,6 +90,7 @@
   "version_major"
   "version_minor"
   "version_patch"
+  "artifact"
   "description"
   "website"
   "author"

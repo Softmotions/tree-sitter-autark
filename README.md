@@ -497,7 +497,7 @@ important.
 | `objects`, `consumes`, `produces` inside `cc` / `cxx` | `@property` |
 | `exec`, `shell`, `consumes`, `produces`, and bare `always` inside `run` / `run-on-install` | `@property` |
 | `init`, `setup`, `build` inside `echo` | `@property` |
-| `name`, `version`, `version_major`, `version_minor`, `version_patch`, `description`, `website`, `author`, `vendor`, `maintainer`, `sources`, `license` inside `meta` | `@property` |
+| `name`, `artifact`, `version`, `version_major`, `version_minor`, `version_patch`, `description`, `website`, `author`, `vendor`, `maintainer`, `sources`, `license` inside `meta` | `@property` |
 | `parent` / `root` blocks under `set` / `let` or `library` | `@property` |
 | `defined`, `!defined`, `eq`, `!eq`, `prefix`, `!prefix`, `and`, `or` when used directly under `if` or inside an `and` / `or` condition group | `@property` |
 | first direct literal of `set` / `let`, `env`, `option`, `macro`, `foreach`; first literal inside `parent` / `root` blocks | `@keyword.modifier` |

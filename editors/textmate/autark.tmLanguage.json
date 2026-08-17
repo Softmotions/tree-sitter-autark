@@ -232,7 +232,7 @@
     "meta-property-block": {
       "patterns": [
         {
-          "begin": "(?<![^\\s{}])((?:name|version_major|version_minor|version_patch|version|description|website|author|vendor|maintainer|sources|license))[ \\t\\r\\n]*(\\{)",
+          "begin": "(?<![^\\s{}])((?:name|artifact|version_major|version_minor|version_patch|version|description|website|author|vendor|maintainer|sources|license))[ \\t\\r\\n]*(\\{)",
           "beginCaptures": {
             "1": {
               "name": "variable.other.property.autark"
