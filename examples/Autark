@@ -120,3 +120,7 @@ run {
 }
 
 include { distr.autark }
+
+if { in { ${A} "b" ${C} } 
+
+}

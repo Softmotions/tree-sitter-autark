@@ -258,7 +258,7 @@
     "condition-property-block": {
       "patterns": [
         {
-          "begin": "(?<![^\\s{}])((?:!?(?:defined|eq|prefix|contains)))[ \\t\\r\\n]*(\\{)",
+          "begin": "(?<![^\\s{}])((?:!?(?:defined|eq|prefix|in|contains)))[ \\t\\r\\n]*(\\{)",
           "beginCaptures": {
             "1": {
               "name": "variable.other.property.autark"

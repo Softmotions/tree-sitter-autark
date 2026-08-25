@@ -144,6 +144,7 @@
   "eq" "!eq"
   "prefix" "!prefix"
   "contains" "!contains"
+  "in" "!in" 
   "and" "or"))
 
 ((rule
@@ -155,6 +156,7 @@
    "eq" "!eq"
    "prefix" "!prefix"
    "contains" "!contains"
+  "in" "!in" 
    "and" "or"))
 
 
