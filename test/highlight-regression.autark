@@ -15,8 +15,19 @@ cxx {
   objects { CXX_OBJS }
 }
 
+host-cc {
+  objects { HOST_CC_OBJS }
+  consumes { HOST_DEPS }
+}
+
+host-cxx {
+  objects { HOST_CXX_OBJS }
+  produces { host-gen }
+}
+
 run {
   always
+  host
   exec { runner }
   shell { /bin/sh }
   consumes { CC_OBJS }

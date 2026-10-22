@@ -70,7 +70,7 @@
 ((rule
    name: (rule_name (run))
    body: (literal) @property)
- (#any-of? @property "always"))
+ (#any-of? @property "always" "host"))
 
 ((rule
    name: (rule_name (echo))

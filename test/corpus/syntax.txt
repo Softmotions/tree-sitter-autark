@@ -120,6 +120,8 @@ include {}
 option {}
 cc {}
 cxx {}
+host-cc {}
+host-cxx {}
 env {}
 set {}
 !set {}
@@ -139,6 +141,7 @@ install {}
 install-sources {}
 macro {}
 call {}
+host-holder { host-cc host-cxx host }
 
 ---
 
@@ -152,6 +155,12 @@ call {}
   (rule
     (rule_name
       (option)))
+  (rule
+    (rule_name
+      (cc)))
+  (rule
+    (rule_name
+      (cc)))
   (rule
     (rule_name
       (cc)))
@@ -214,7 +223,12 @@ call {}
       (macro)))
   (rule
     (rule_name
-      (call))))
+      (call)))
+  (rule
+    (rule_name)
+    (literal)
+    (literal)
+    (literal)))
 
 ==================
 Condition group aliases
@@ -266,3 +280,63 @@ holder { and !and or !or }
     (literal)
     (literal)
     (literal)))
+
+==================
+Cross compilation: host-cc, host-cxx and run { host }
+==================
+
+host-cc { peg.c tree.c }
+
+host-cxx {
+  gen.cxx
+  objects { HOST_CXX_OBJS }
+  consumes { HOST_CXX_OBJS }
+}
+
+run {
+  host
+  exec { ${HOST_CC} -o leg ${HOST_CC_OBJS} }
+  consumes { ${HOST_CC_OBJS} }
+  produces { leg }
+}
+
+---
+
+(source_file
+  (rule
+    name: (rule_name
+      (cc))
+    body: (literal)
+    body: (literal))
+  (rule
+    name: (rule_name
+      (cc))
+    body: (literal)
+    body: (rule
+      name: (rule_name)
+      body: (literal))
+    body: (rule
+      name: (rule_name)
+      body: (literal)))
+  (rule
+    name: (rule_name
+      (run))
+    body: (literal)
+    body: (rule
+      name: (rule_name)
+      body: (rule
+        name: (rule_name)
+        body: (literal))
+      body: (literal)
+      body: (literal)
+      body: (rule
+        name: (rule_name)
+        body: (literal)))
+    body: (rule
+      name: (rule_name)
+      body: (rule
+        name: (rule_name)
+        body: (literal)))
+    body: (rule
+      name: (rule_name)
+      body: (literal))))

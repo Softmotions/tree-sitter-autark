@@ -18,6 +18,25 @@ run {
   produces { hello }
 }
 
+# Cross compilation: build tools are compiled for the build host.
+host-cc {
+  peg.c tree.c leg.c
+  objects { HOST_CC_OBJS }
+}
+
+host-cxx {
+  gen.cxx
+  objects { HOST_CXX_OBJS }
+  consumes { ${HOST_CXX_OBJS} }
+}
+
+run {
+  host
+  exec { ${HOST_CC} -o leg ${HOST_CC_OBJS} }
+  consumes { ${HOST_CC_OBJS} }
+  produces { leg }
+}
+
 foo {
   bar
 }

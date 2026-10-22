@@ -419,6 +419,24 @@
           "type": "ALIAS",
           "content": {
             "type": "SYMBOL",
+            "name": "_name_host_cc"
+          },
+          "named": true,
+          "value": "cc"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_name_host_cxx"
+          },
+          "named": true,
+          "value": "cc"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
             "name": "_name_env"
           },
           "named": true,
@@ -711,6 +729,14 @@
         },
         {
           "type": "SYMBOL",
+          "name": "_name_host_cc"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_name_host_cxx"
+        },
+        {
+          "type": "SYMBOL",
           "name": "_name_env"
         },
         {
@@ -875,6 +901,28 @@
         "content": {
           "type": "STRING",
           "value": "cxx"
+        }
+      }
+    },
+    "_name_host_cc": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": 1,
+        "content": {
+          "type": "STRING",
+          "value": "host-cc"
+        }
+      }
+    },
+    "_name_host_cxx": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": 1,
+        "content": {
+          "type": "STRING",
+          "value": "host-cxx"
         }
       }
     },

@@ -391,7 +391,7 @@
       ]
     },
     "cc-block": {
-      "begin": "(?<![^\\s{}])((?:cxx|cc))[ \\t\\r\\n]*(\\{)",
+      "begin": "(?<![^\\s{}])((?:host-cc|host-cxx|cxx|cc))[ \\t\\r\\n]*(\\{)",
       "beginCaptures": {
         "1": {
           "name": "keyword.control.directive.autark"
@@ -437,7 +437,7 @@
         },
         {
           "name": "variable.other.property.autark",
-          "match": "(?<![^\\s{}])(always)(?=$|[\\s}])",
+          "match": "(?<![^\\s{}])(always|host)(?=$|[\\s}])",
           "captures": {
             "1": {
               "name": "variable.other.property.autark"

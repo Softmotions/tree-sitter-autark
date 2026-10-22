@@ -348,6 +348,14 @@
     "named": false
   },
   {
+    "type": "host-cc",
+    "named": false
+  },
+  {
+    "type": "host-cxx",
+    "named": false
+  },
+  {
     "type": "if",
     "named": false
   },

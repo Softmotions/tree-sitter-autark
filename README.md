@@ -44,8 +44,9 @@ tree-sitter highlight examples/Autark
 ```
 
 The corpus currently covers nested rules, quoted and bare literals, Autark
-escapes, special forms, negation/spread prefixes, exact whole-line comment
-semantics, adjacent top-level rules, and whitespace/comment edge cases.
+escapes, special forms, negation/spread prefixes, cross-compilation forms
+(`host-cc`, `host-cxx` and the `run { host ... }` marker), exact whole-line
+comment semantics, adjacent top-level rules, and whitespace/comment edge cases.
 
 ### Build the WASM parser
 
@@ -65,13 +66,16 @@ The result is normally `tree-sitter-autark.wasm` in the project root.
 
 The bundled Tree-sitter query is deliberately context-sensitive:
 
-- primary directives such as `meta`, `set`, `let`, `cc`, `cxx`, `run`,
+- primary directives such as `meta`, `set`, `let`, `cc`, `cxx`, `host-cc`,
+  `host-cxx`, `run`,
   `run-on-install`, `include` and `install-sources` use `@keyword`;
 - `if`, `!if` and `else` use `@keyword.conditional`;
 - built-in child fields use `@property` only in the contexts where they are
-  meaningful: metadata fields under `meta`, build inputs/outputs under `cc` and
-  `run`, phases under `echo`, and conditions under `if` / `and` / `or` groups;
-- `always` inside `run` / `run-on-install` is also `@property`;
+  meaningful: metadata fields under `meta`, build inputs/outputs under `cc`,
+  `cxx`, `host-cc`, `host-cxx` and `run`, phases under `echo`, and conditions
+  under `if` / `and` / `or` groups;
+- `always` and the cross-compilation `host` marker inside `run` /
+  `run-on-install` are also `@property`;
 - positional names such as the first argument of `set`, `let`, `env`, `option`,
   `macro` and `foreach` use `@keyword.modifier`;
 - check-script names and the first argument of `call` use `@function.call`;
@@ -492,10 +496,10 @@ important.
 
 | Syntax / context | Capture |
 |---|---|
-| primary directives (`meta`, `include`, `cc`/`cxx`, `env`, `set`/`let`, `echo`, `check`, `configure`, `run`/`run-on-install`, `in-sources`, `foreach`, `library`, `install`/`install-sources`, `macro`, `call`, `option`) | `@keyword` |
+| primary directives (`meta`, `include`, `cc`/`cxx`/`host-cc`/`host-cxx`, `env`, `set`/`let`, `echo`, `check`, `configure`, `run`/`run-on-install`, `in-sources`, `foreach`, `library`, `install`/`install-sources`, `macro`, `call`, `option`) | `@keyword` |
 | `if`, `!if`, `else` | `@keyword.conditional` |
-| `objects`, `consumes`, `produces` inside `cc` / `cxx` | `@property` |
-| `exec`, `shell`, `consumes`, `produces`, and bare `always` inside `run` / `run-on-install` | `@property` |
+| `objects`, `consumes`, `produces` inside `cc` / `cxx` / `host-cc` / `host-cxx` | `@property` |
+| `exec`, `shell`, `consumes`, `produces`, and bare `always` / `host` inside `run` / `run-on-install` | `@property` |
 | `init`, `setup`, `build` inside `echo` | `@property` |
 | `name`, `artifact`, `version`, `version_major`, `version_minor`, `version_patch`, `description`, `website`, `author`, `vendor`, `maintainer`, `sources`, `license` inside `meta` | `@property` |
 | `parent` / `root` blocks under `set` / `let` or `library` | `@property` |

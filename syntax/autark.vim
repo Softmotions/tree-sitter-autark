@@ -19,7 +19,7 @@ syn match autarkRuleName /\%([^{}\\[:space:]]\|\\[{}\\nrt]\)\+\ze\_s*{/
 
 " Named directive aliases from grammar.js. Keep the prefixed variants explicit:
 " the grammar aliases !set/..set and !let/..let, but not combined ..! forms.
-syn match autarkKeywordRule /\%(^\|[{}[:space:]]\)\zs\%(meta\|include\|option\|cc\|cxx\|env\|echo\|error\|check\|configure\|run\|run-on-install\|in-sources\|foreach\|library\|install\|install-sources\|macro\|call\)\ze\_s*{/
+syn match autarkKeywordRule /\%(^\|[{}[:space:]]\)\zs\%(meta\|include\|option\|cc\|cxx\|host-cc\|host-cxx\|env\|echo\|error\|check\|configure\|run\|run-on-install\|in-sources\|foreach\|library\|install\|install-sources\|macro\|call\)\ze\_s*{/
 syn match autarkKeywordRule /\%(^\|[{}[:space:]]\)\zs\%(set\|!set\|\.\.set\|let\|!let\|\.\.let\)\ze\_s*{/
 
 " Conditional aliases. if/!if share one grammar alias; else is separate.
@@ -55,9 +55,10 @@ syn match autarkCheckTarget /\%(check\_s*{\_s*\)\@<=\%(\%([^{}\\[:space:]]\|\\[{
 " policy. In plain Vim these are intentionally name-based approximations.
 syn match autarkPropertyRule /\%(^\|[{}[:space:]]\)\zs\%(name\|version\|artifact\|version_major\|version_minor\|version_patch\|description\|website\|author\|vendor\|maintainer\|sources\|license\|parent\|root\|objects\|consumes\|produces\|exec\|shell\|build\|setup\|init\)\ze\_s*{/
 
-" `always` is a bare property-like value under run/run-on-install. Without AST
-" context, plain Vim treats the standalone token consistently wherever it occurs.
-syn match autarkPropertyValue /\%(^\|[{}[:space:]]\)\zsalways\ze\%($\|[{}[:space:]]\)/
+" `always` and `host` are bare property-like values under run/run-on-install.
+" Without AST context, plain Vim treats these standalone tokens consistently
+" wherever they occur.
+syn match autarkPropertyValue /\%(^\|[{}[:space:]]\)\zs\%(always\|host\)\ze\%($\|[{}[:space:]]\)/
 
 syn match autarkDelimiter /[{}]/
 

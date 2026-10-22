@@ -40,8 +40,8 @@ assert_html_class() {
 }
 
 # Primary aliases, including shared aliases such as cxx -> cc,
-# run-on-install -> run and install-sources -> install.
-for text in meta cc cxx run run-on-install echo check set let env option macro foreach library call include install-sources; do
+# host-cc/host-cxx -> cc, run-on-install -> run and install-sources -> install.
+for text in meta cc cxx host-cc host-cxx run run-on-install echo check set let env option macro foreach library call include install-sources; do
   assert_capture keyword "$text"
 done
 
@@ -51,7 +51,8 @@ done
 
 # Contextual fields. Multiple properties in the same parent must all survive
 # the actual highlighter, not merely appear in raw query matches.
-for text in objects consumes produces exec shell always; do
+# `host` is the cross-compilation marker of a build tool `run` rule.
+for text in objects consumes produces exec shell always host; do
   assert_capture property "$text"
   assert_html_class property "$text"
 done
