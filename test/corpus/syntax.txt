@@ -291,6 +291,7 @@ host-cxx {
   gen.cxx
   objects { HOST_CXX_OBJS }
   consumes { HOST_CXX_OBJS }
+  modules { gen.cpp }
 }
 
 run {
@@ -312,6 +313,9 @@ run {
     name: (rule_name
       (cc))
     body: (literal)
+    body: (rule
+      name: (rule_name)
+      body: (literal))
     body: (rule
       name: (rule_name)
       body: (literal))

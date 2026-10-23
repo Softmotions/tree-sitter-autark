@@ -128,7 +128,7 @@
     "cc-property-block": {
       "patterns": [
         {
-          "begin": "(?<![^\\s{}])((?:consumes|produces|objects))[ \\t\\r\\n]*(\\{)",
+          "begin": "(?<![^\\s{}])((?:consumes|produces|objects|modules))[ \\t\\r\\n]*(\\{)",
           "beginCaptures": {
             "1": {
               "name": "variable.other.property.autark"
@@ -180,7 +180,7 @@
     "if-else-build-property-block": {
       "patterns": [
         {
-          "begin": "(?<![^\\s{}])((?:consumes|produces|objects|exec|shell))[ \\t\\r\\n]*(\\{)",
+          "begin": "(?<![^\\s{}])((?:consumes|produces|objects|modules|exec|shell))[ \\t\\r\\n]*(\\{)",
           "beginCaptures": {
             "1": {
               "name": "variable.other.property.autark"

@@ -52,7 +52,7 @@ done
 # Contextual fields. Multiple properties in the same parent must all survive
 # the actual highlighter, not merely appear in raw query matches.
 # `host` is the cross-compilation marker of a build tool `run` rule.
-for text in objects consumes produces exec shell always host; do
+for text in objects consumes produces modules exec shell always host; do
   assert_capture property "$text"
   assert_html_class property "$text"
 done

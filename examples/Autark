@@ -28,6 +28,7 @@ host-cxx {
   gen.cxx
   objects { HOST_CXX_OBJS }
   consumes { ${HOST_CXX_OBJS} }
+  modules { gen.cpp }
 }
 
 run {

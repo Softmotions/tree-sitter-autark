@@ -71,9 +71,9 @@ The bundled Tree-sitter query is deliberately context-sensitive:
   `run-on-install`, `include` and `install-sources` use `@keyword`;
 - `if`, `!if` and `else` use `@keyword.conditional`;
 - built-in child fields use `@property` only in the contexts where they are
-  meaningful: metadata fields under `meta`, build inputs/outputs under `cc`,
-  `cxx`, `host-cc`, `host-cxx` and `run`, phases under `echo`, and conditions
-  under `if` / `and` / `or` groups;
+  meaningful: metadata fields under `meta`, build inputs/outputs and C++20
+  module unit lists under `cc`, `cxx`, `host-cc`, `host-cxx` and `run`, phases
+  under `echo`, and conditions under `if` / `and` / `or` groups;
 - `always` and the cross-compilation `host` marker inside `run` /
   `run-on-install` are also `@property`;
 - positional names such as the first argument of `set`, `let`, `env`, `option`,
@@ -498,7 +498,7 @@ important.
 |---|---|
 | primary directives (`meta`, `include`, `cc`/`cxx`/`host-cc`/`host-cxx`, `env`, `set`/`let`, `echo`, `check`, `configure`, `run`/`run-on-install`, `in-sources`, `foreach`, `library`, `install`/`install-sources`, `macro`, `call`, `option`) | `@keyword` |
 | `if`, `!if`, `else` | `@keyword.conditional` |
-| `objects`, `consumes`, `produces` inside `cc` / `cxx` / `host-cc` / `host-cxx` | `@property` |
+| `objects`, `consumes`, `produces`, `modules` inside `cc` / `cxx` / `host-cc` / `host-cxx` | `@property` |
 | `exec`, `shell`, `consumes`, `produces`, and bare `always` / `host` inside `run` / `run-on-install` | `@property` |
 | `init`, `setup`, `build` inside `echo` | `@property` |
 | `name`, `artifact`, `version`, `version_major`, `version_minor`, `version_patch`, `description`, `website`, `author`, `vendor`, `maintainer`, `sources`, `license` inside `meta` | `@property` |

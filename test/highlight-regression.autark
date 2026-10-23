@@ -13,6 +13,7 @@ cc {
 
 cxx {
   objects { CXX_OBJS }
+  modules { impl.cpp }
 }
 
 host-cc {
@@ -23,6 +24,7 @@ host-cc {
 host-cxx {
   objects { HOST_CXX_OBJS }
   produces { host-gen }
+  modules { gen.cpp }
 }
 
 run {

@@ -56,7 +56,8 @@
  (#any-of? @property
    "consumes"
    "produces"
-   "objects"))
+   "objects"
+   "modules"))
    
 ((rule
    name: (rule_name [(run) (if) (else)])

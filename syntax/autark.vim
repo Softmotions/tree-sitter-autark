@@ -53,7 +53,7 @@ syn match autarkCheckTarget /\%(check\_s*{\_s*\)\@<=\%(\%([^{}\\[:space:]]\|\\[{
 
 " Named fields/subsections recognized by the current Tree-sitter highlighting
 " policy. In plain Vim these are intentionally name-based approximations.
-syn match autarkPropertyRule /\%(^\|[{}[:space:]]\)\zs\%(name\|version\|artifact\|version_major\|version_minor\|version_patch\|description\|website\|author\|vendor\|maintainer\|sources\|license\|parent\|root\|objects\|consumes\|produces\|exec\|shell\|build\|setup\|init\)\ze\_s*{/
+syn match autarkPropertyRule /\%(^\|[{}[:space:]]\)\zs\%(name\|version\|artifact\|version_major\|version_minor\|version_patch\|description\|website\|author\|vendor\|maintainer\|sources\|license\|parent\|root\|objects\|consumes\|produces\|modules\|exec\|shell\|build\|setup\|init\)\ze\_s*{/
 
 " `always` and `host` are bare property-like values under run/run-on-install.
 " Without AST context, plain Vim treats these standalone tokens consistently
